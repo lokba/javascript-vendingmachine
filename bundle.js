@@ -13,7 +13,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
 /* harmony export */   "CONFIRM_MESSAGE": () => (/* binding */ CONFIRM_MESSAGE),
 /* harmony export */   "PRODUCT_RULES": () => (/* binding */ PRODUCT_RULES),
-/* harmony export */   "VENDING_MACHINE_RULES": () => (/* binding */ VENDING_MACHINE_RULES)
+/* harmony export */   "VENDING_MACHINE_RULES": () => (/* binding */ VENDING_MACHINE_RULES),
+/* harmony export */   "COIN_500": () => (/* binding */ COIN_500),
+/* harmony export */   "COIN_100": () => (/* binding */ COIN_100),
+/* harmony export */   "COIN_50": () => (/* binding */ COIN_50),
+/* harmony export */   "COIN_10": () => (/* binding */ COIN_10)
 /* harmony export */ });
 var ERROR_MESSAGE = {
   CONTAIN_EMPTY_FIELD_IN_FORM: '상품명, 가격, 수량을 모두 입력해주세요.',
@@ -40,6 +44,22 @@ var PRODUCT_RULES = {
 var VENDING_MACHINE_RULES = {
   CHANGE_UNIT: 10,
   MAX_TOTAL_CHANGE: 100000
+};
+var COIN_500 = {
+  NAME: 'FIVE_HUNDRED_WON',
+  VALUE: 500
+};
+var COIN_100 = {
+  NAME: 'ONE_HUNDRED_WON',
+  VALUE: 100
+};
+var COIN_50 = {
+  NAME: 'FIFTY_WON',
+  VALUE: 50
+};
+var COIN_10 = {
+  NAME: 'TEN_WON',
+  VALUE: 10
 };
 
 /***/ }),
@@ -1452,14 +1472,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ MoneyBox)
 /* harmony export */ });
 /* harmony import */ var _RandomStrategy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RandomStrategy */ "./src/js/domain/RandomStrategy.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+
 
 class MoneyBox {
     constructor() {
         this._coinStatusList = [
-            { name: 'FIVE_HUNDRED_WON', value: 500, count: 0 },
-            { name: 'ONE_HUNDRED_WON', value: 100, count: 0 },
-            { name: 'FIFTY_WON', value: 50, count: 0 },
-            { name: 'TEN_WON', value: 10, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_100.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_100.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_50.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_50.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.VALUE, count: 0 },
         ];
         this.coinDistributeStrategy = _RandomStrategy__WEBPACK_IMPORTED_MODULE_0__["default"];
     }
@@ -1470,15 +1492,11 @@ class MoneyBox {
         return this._coinStatusList.reduce((totalAmount, { value, count }) => totalAmount + value * count, 0);
     }
     get coinStatus() {
-        return this._coinStatusList.reduce((totalStatus, { name, count }) => {
+        const totalStatus = {};
+        this._coinStatusList.forEach(({ name, count }) => {
             totalStatus[name] = count;
-            return totalStatus;
-        }, {
-            FIVE_HUNDRED_WON: 0,
-            ONE_HUNDRED_WON: 0,
-            FIFTY_WON: 0,
-            TEN_WON: 0,
         });
+        return totalStatus;
     }
     get coinStatusList() {
         return this._coinStatusList;
@@ -1505,6 +1523,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+
 
 function getRandomCoin(moneyLeft, value) {
     const maxCount = Math.floor(moneyLeft / value);
@@ -1514,10 +1534,10 @@ const RandomStrategy = {
     // eslint-disable-next-line max-lines-per-function
     distribute(inputMoney) {
         const coinStatusList = [
-            { name: 'FIVE_HUNDRED_WON', value: 500, count: 0 },
-            { name: 'ONE_HUNDRED_WON', value: 100, count: 0 },
-            { name: 'FIFTY_WON', value: 50, count: 0 },
-            { name: 'TEN_WON', value: 10, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_100.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_100.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_50.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_50.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.VALUE, count: 0 },
         ];
         let moneyLeft = inputMoney;
         coinStatusList.forEach((coin) => {
