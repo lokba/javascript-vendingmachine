@@ -32,7 +32,7 @@ var ERROR_MESSAGE = {
   INVALID_UNIT_CHANGE: '충전 금액은 10원 단위이어야 합니다.',
   EXCEED_MAX_TOTAL_CHANGE: '최대 보유 금액은 100,000원을 초과할 수 없습니다.'
 };
-var CONFIRM_MESSAGE = '정말 삭제하시겠습니까?';
+var CONFIRM_MESSAGE = '상품을 정말 삭제하시겠습니까?';
 var PRODUCT_RULES = {
   MAX_NAME_LENGTH: 10,
   MIN_PRICE: 100,
@@ -361,9 +361,11 @@ var _handleProductStatus = /*#__PURE__*/new WeakMap();
 
 var _handleProductUpdate = /*#__PURE__*/new WeakMap();
 
+var _handleProductRemove = /*#__PURE__*/new WeakMap();
+
 var _handleProductUpdateConfirm = /*#__PURE__*/new WeakMap();
 
-var _handleProductRemove = /*#__PURE__*/new WeakMap();
+var _handleProductUpdateCancel = /*#__PURE__*/new WeakMap();
 
 var ManageProductTab = /*#__PURE__*/function () {
   function ManageProductTab(machine) {
@@ -451,12 +453,16 @@ var ManageProductTab = /*#__PURE__*/function () {
           _classPrivateFieldGet(_this, _handleProductUpdate).call(_this, target);
         }
 
-        if (classList.contains('remove-product-button') && window.confirm(_constants__WEBPACK_IMPORTED_MODULE_0__.CONFIRM_MESSAGE)) {
+        if (classList.contains('remove-product-button')) {
           _classPrivateFieldGet(_this, _handleProductRemove).call(_this, target);
         }
 
         if (classList.contains('confirm-update-button')) {
           _classPrivateFieldGet(_this, _handleProductUpdateConfirm).call(_this, target);
+        }
+
+        if (classList.contains('cancel-update-button')) {
+          _classPrivateFieldGet(_this, _handleProductUpdateCancel).call(_this, target);
         }
       }
     });
@@ -476,6 +482,27 @@ var ManageProductTab = /*#__PURE__*/function () {
           id: id
         }));
         targetTableRow.remove();
+      }
+    });
+
+    _classPrivateFieldInitSpec(this, _handleProductRemove, {
+      writable: true,
+      value: function value(target) {
+        var targetTableRow = target.closest('tr');
+        var productName = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('.product-name', targetTableRow).textContent;
+
+        if (window.confirm(productName + _constants__WEBPACK_IMPORTED_MODULE_0__.CONFIRM_MESSAGE)) {
+          var id = target.dataset.productId;
+
+          try {
+            _classPrivateFieldGet(_this, _vendingMachine).removeProduct(id);
+
+            target.closest('tr').remove();
+          } catch (_ref3) {
+            var message = _ref3.message;
+            alert(message);
+          }
+        }
       }
     });
 
@@ -502,26 +529,31 @@ var ManageProductTab = /*#__PURE__*/function () {
             id: id
           }));
           targetTableRow.remove();
-        } catch (_ref3) {
-          var message = _ref3.message;
+        } catch (_ref4) {
+          var message = _ref4.message;
           alert(message);
         }
       }
     });
 
-    _classPrivateFieldInitSpec(this, _handleProductRemove, {
+    _classPrivateFieldInitSpec(this, _handleProductUpdateCancel, {
       writable: true,
       value: function value(target) {
+        var targetTableRow = target.closest('tr');
         var id = target.dataset.productId;
 
-        try {
-          _classPrivateFieldGet(_this, _vendingMachine).removeProduct(id);
+        var product = _classPrivateFieldGet(_this, _vendingMachine).productList[id];
 
-          target.closest('tr').remove();
-        } catch (_ref4) {
-          var message = _ref4.message;
-          alert(message);
-        }
+        var name = product.name,
+            price = product.price,
+            stock = product.stock;
+        targetTableRow.insertAdjacentHTML('afterend', (0,_template__WEBPACK_IMPORTED_MODULE_2__.productTableRow)({
+          name: name,
+          price: price,
+          stock: stock,
+          id: id
+        }));
+        targetTableRow.remove();
       }
     });
 
@@ -809,7 +841,7 @@ var updateProductTableRow = function updateProductTableRow(_ref2) {
       price = _ref2.price,
       stock = _ref2.stock,
       id = _ref2.id;
-  return "\n<tr>\n  <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n  <td>\n    <div class=\"table-button-wrapper\">\n      <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n      \uD655\uC778\n      </button>\n    </div>\n  </td>\n</tr>\n");
+  return "\n<tr>\n  <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n  <td>\n    <div class=\"table-button-wrapper\">\n      <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n      \uD655\uC778\n      </button>\n      <button type=\"button\" class=\"cancel-update-button\" data-product-id=").concat(id, ">\n      \uCDE8\uC18C\n      </button>\n    </div>\n  </td>\n</tr>\n");
 };
 var purchaseTemplate = '<div>아직 공사중입니다 🚫</div>';
 var notFoundTemplate = "\n<section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n  <h2>\uD83D\uDED2 Page Not Found</h2>\n  <a href=\"#/manage\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n</section>";
