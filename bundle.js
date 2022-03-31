@@ -10,37 +10,57 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
-/* harmony export */   "CONFIRM_MESSAGE": () => (/* binding */ CONFIRM_MESSAGE),
 /* harmony export */   "PRODUCT_RULES": () => (/* binding */ PRODUCT_RULES),
-/* harmony export */   "VENDING_MACHINE_RULES": () => (/* binding */ VENDING_MACHINE_RULES)
+/* harmony export */   "VENDING_MACHINE_RULES": () => (/* binding */ VENDING_MACHINE_RULES),
+/* harmony export */   "COIN_500": () => (/* binding */ COIN_500),
+/* harmony export */   "COIN_100": () => (/* binding */ COIN_100),
+/* harmony export */   "COIN_50": () => (/* binding */ COIN_50),
+/* harmony export */   "COIN_10": () => (/* binding */ COIN_10),
+/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
+/* harmony export */   "CONFIRM_MESSAGE": () => (/* binding */ CONFIRM_MESSAGE)
 /* harmony export */ });
-var ERROR_MESSAGE = {
-  CONTAIN_EMPTY_FIELD_IN_FORM: '상품명, 가격, 수량을 모두 입력해주세요.',
-  EXCEED_MAX_PRODUCT_NAME_LENGTH: '상품명은 10글자를 초과해서는 안됩니다.',
-  DUPLICATE_PRODUCT_NAME: '중복된 상품명의 상품은 등록할 수 없습니다.',
-  OUT_OF_PRODUCT_PRICE_RANGE: '상품 가격은 100원 미만이거나 10000원 초과할 수 없습니다.',
-  INVALID_UNIT_PRODUCT_PRICE: '상품 가격은 10원 단위여야 합니다.',
-  INVALID_PRODUCT_STOCK: '올바른 수량을 입력해주세요',
-  OUT_OF_PRODUCT_STOCK_RANGE: '상품 수량은 1개 미만이거나 20개 초과할 수 없습니다.',
-  NOT_FOUND_PRODUCT_ID: '존재하지 않는 상품 아이디입니다.',
-  BELOW_MIN_CHANGE: '충전 금액은 0원 이하일 수 없습니다.',
-  INVALID_UNIT_CHANGE: '충전 금액은 10원 단위이어야 합니다.',
-  EXCEED_MAX_TOTAL_CHANGE: '최대 보유 금액은 100,000원을 초과할 수 없습니다.'
-};
-var CONFIRM_MESSAGE = '정말 삭제하시겠습니까?';
 var PRODUCT_RULES = {
   MAX_NAME_LENGTH: 10,
   MIN_PRICE: 100,
   MAX_PRICE: 10000,
   PRICE_UNIT: 10,
-  MAX_STOCK: 20,
-  MIN_STOCK: 1
+  MIN_STOCK: 1,
+  MAX_STOCK: 20
 };
 var VENDING_MACHINE_RULES = {
   CHANGE_UNIT: 10,
   MAX_TOTAL_CHANGE: 100000
 };
+var COIN_500 = {
+  NAME: 'FIVE_HUNDRED_WON',
+  VALUE: 500
+};
+var COIN_100 = {
+  NAME: 'ONE_HUNDRED_WON',
+  VALUE: 100
+};
+var COIN_50 = {
+  NAME: 'FIFTY_WON',
+  VALUE: 50
+};
+var COIN_10 = {
+  NAME: 'TEN_WON',
+  VALUE: 10
+};
+var ERROR_MESSAGE = {
+  CONTAIN_EMPTY_FIELD_IN_FORM: '상품명, 가격, 수량을 모두 입력해주세요.',
+  EXCEED_MAX_PRODUCT_NAME_LENGTH: "\uC0C1\uD488\uBA85\uC740 ".concat(PRODUCT_RULES.MAX_NAME_LENGTH, "\uAE00\uC790\uB97C \uCD08\uACFC\uD574\uC11C\uB294 \uC548\uB429\uB2C8\uB2E4."),
+  DUPLICATE_PRODUCT_NAME: '중복된 상품명의 상품은 등록할 수 없습니다.',
+  OUT_OF_PRODUCT_PRICE_RANGE: "\uC0C1\uD488 \uAC00\uACA9\uC740 ".concat(PRODUCT_RULES.MIN_PRICE, "\uC6D0 \uBBF8\uB9CC\uC774\uAC70\uB098 ").concat(PRODUCT_RULES.MAX_PRICE, "\uC6D0 \uCD08\uACFC\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."),
+  INVALID_UNIT_PRODUCT_PRICE: "\uC0C1\uD488 \uAC00\uACA9\uC740 ".concat(PRODUCT_RULES.PRICE_UNIT, "\uC6D0 \uB2E8\uC704\uC5EC\uC57C \uD569\uB2C8\uB2E4."),
+  INVALID_PRODUCT_STOCK: '올바른 수량을 입력해주세요',
+  OUT_OF_PRODUCT_STOCK_RANGE: "\uC0C1\uD488 \uC218\uB7C9\uC740 ".concat(PRODUCT_RULES.MIN_STOCK, "\uAC1C \uBBF8\uB9CC\uC774\uAC70\uB098 ").concat(PRODUCT_RULES.MAX_STOCK, "\uAC1C \uCD08\uACFC\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."),
+  NOT_FOUND_PRODUCT_ID: '존재하지 않는 상품 아이디입니다.',
+  BELOW_MIN_CHANGE: '충전 금액은 0원 이하일 수 없습니다.',
+  INVALID_UNIT_CHANGE: "\uCDA9\uC804 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE_RULES.CHANGE_UNIT, "\uC6D0 \uB2E8\uC704\uC774\uC5B4\uC57C \uD569\uB2C8\uB2E4."),
+  EXCEED_MAX_TOTAL_CHANGE: "\uCD5C\uB300 \uBCF4\uC720 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE_RULES.MAX_TOTAL_CHANGE, "\uC6D0\uC744 \uCD08\uACFC\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.")
+};
+var CONFIRM_MESSAGE = '상품을 정말 삭제하시겠습니까?';
 
 /***/ }),
 
@@ -52,7 +72,6 @@ var VENDING_MACHINE_RULES = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _view_Router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./view/Router */ "./src/js/view/Router.js");
- // eslint-disable-next-line no-new
 
 new _view_Router__WEBPACK_IMPORTED_MODULE_0__["default"]();
 
@@ -90,8 +109,11 @@ function createMainElement(template) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "pickNumberInRange": () => (/* binding */ pickNumberInRange),
-/* harmony export */   "generateUniqueId": () => (/* binding */ generateUniqueId)
+/* harmony export */   "generateUniqueId": () => (/* binding */ generateUniqueId),
+/* harmony export */   "deepCopy": () => (/* binding */ deepCopy)
 /* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 function pickNumberInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -112,6 +134,20 @@ function generateUniqueId(list) {
   }
 
   return newId;
+}
+function deepCopy(obj) {
+  var cloneObject = {};
+
+  for (var key in obj) {
+    if (_typeof(obj[key]) === 'object' && obj[key] !== null) {
+      cloneObject[key] = deepCopy(obj[key]);
+      continue;
+    }
+
+    cloneObject[key] = obj[key];
+  }
+
+  return cloneObject;
 }
 
 /***/ }),
@@ -233,9 +269,10 @@ var AddChangeTab = /*#__PURE__*/function () {
       }
     });
 
+    //멤버변수 생성
     _classPrivateFieldSet(this, _vendingMachine, machine);
 
-    _classPrivateFieldSet(this, _addChangeContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.addChangeTemplate));
+    _classPrivateFieldSet(this, _addChangeContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.TEMPLATE.ADD_CHANGE));
 
     _classPrivateFieldSet(this, _addChangeForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#add-change-form', _classPrivateFieldGet(this, _addChangeContainer)));
 
@@ -243,7 +280,8 @@ var AddChangeTab = /*#__PURE__*/function () {
 
     _classPrivateFieldSet(this, _totalChange, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#total-change', _classPrivateFieldGet(this, _addChangeContainer)));
 
-    _classPrivateFieldSet(this, _coinStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#coin-status-table', _classPrivateFieldGet(this, _addChangeContainer)));
+    _classPrivateFieldSet(this, _coinStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#coin-status-table', _classPrivateFieldGet(this, _addChangeContainer))); //이벤트 바인딩
+
 
     _classPrivateFieldGet(this, _addChangeForm).addEventListener('submit', _classPrivateFieldGet(this, _handleAddChange));
   }
@@ -341,9 +379,11 @@ var _handleProductStatus = /*#__PURE__*/new WeakMap();
 
 var _handleProductUpdate = /*#__PURE__*/new WeakMap();
 
+var _handleProductRemove = /*#__PURE__*/new WeakMap();
+
 var _handleProductUpdateConfirm = /*#__PURE__*/new WeakMap();
 
-var _handleProductRemove = /*#__PURE__*/new WeakMap();
+var _handleProductUpdateCancel = /*#__PURE__*/new WeakMap();
 
 var ManageProductTab = /*#__PURE__*/function () {
   function ManageProductTab(machine) {
@@ -406,7 +446,7 @@ var ManageProductTab = /*#__PURE__*/function () {
             stock: stock
           });
 
-          _classPrivateFieldGet(_this, _productStatusTable).insertAdjacentHTML('beforeend', (0,_template__WEBPACK_IMPORTED_MODULE_2__.productTableRow)({
+          _classPrivateFieldGet(_this, _productStatusTable).insertAdjacentHTML('beforeend', _template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.PRODUCT_TABLE_ROW({
             name: name,
             price: price,
             stock: stock,
@@ -429,14 +469,26 @@ var ManageProductTab = /*#__PURE__*/function () {
 
         if (classList.contains('update-product-button')) {
           _classPrivateFieldGet(_this, _handleProductUpdate).call(_this, target);
+
+          return;
         }
 
-        if (classList.contains('remove-product-button') && window.confirm(_constants__WEBPACK_IMPORTED_MODULE_0__.CONFIRM_MESSAGE)) {
+        if (classList.contains('remove-product-button')) {
           _classPrivateFieldGet(_this, _handleProductRemove).call(_this, target);
+
+          return;
         }
 
         if (classList.contains('confirm-update-button')) {
           _classPrivateFieldGet(_this, _handleProductUpdateConfirm).call(_this, target);
+
+          return;
+        }
+
+        if (classList.contains('cancel-update-button')) {
+          _classPrivateFieldGet(_this, _handleProductUpdateCancel).call(_this, target);
+
+          return;
         }
       }
     });
@@ -449,13 +501,34 @@ var ManageProductTab = /*#__PURE__*/function () {
         var price = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('.product-price', targetTableRow).textContent;
         var stock = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('.product-stock', targetTableRow).textContent;
         var id = target.dataset.productId;
-        targetTableRow.insertAdjacentHTML('afterend', (0,_template__WEBPACK_IMPORTED_MODULE_2__.updateProductTableRow)({
+        targetTableRow.insertAdjacentHTML('afterend', _template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.UPDATE_PRODUCT_TABLE_ROW({
           name: name,
           price: price,
           stock: stock,
           id: id
         }));
         targetTableRow.remove();
+      }
+    });
+
+    _classPrivateFieldInitSpec(this, _handleProductRemove, {
+      writable: true,
+      value: function value(target) {
+        var targetTableRow = target.closest('tr');
+        var productName = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('.product-name', targetTableRow).textContent;
+
+        if (window.confirm(productName + _constants__WEBPACK_IMPORTED_MODULE_0__.CONFIRM_MESSAGE)) {
+          var id = target.dataset.productId;
+
+          try {
+            _classPrivateFieldGet(_this, _vendingMachine).removeProduct(id);
+
+            target.closest('tr').remove();
+          } catch (_ref3) {
+            var message = _ref3.message;
+            alert(message);
+          }
+        }
       }
     });
 
@@ -475,29 +548,13 @@ var ManageProductTab = /*#__PURE__*/function () {
             stock: stock
           });
 
-          targetTableRow.insertAdjacentHTML('afterend', (0,_template__WEBPACK_IMPORTED_MODULE_2__.productTableRow)({
+          targetTableRow.insertAdjacentHTML('afterend', _template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.PRODUCT_TABLE_ROW({
             name: name,
             price: price,
             stock: stock,
             id: id
           }));
           targetTableRow.remove();
-        } catch (_ref3) {
-          var message = _ref3.message;
-          alert(message);
-        }
-      }
-    });
-
-    _classPrivateFieldInitSpec(this, _handleProductRemove, {
-      writable: true,
-      value: function value(target) {
-        var id = target.dataset.productId;
-
-        try {
-          _classPrivateFieldGet(_this, _vendingMachine).removeProduct(id);
-
-          target.closest('tr').remove();
         } catch (_ref4) {
           var message = _ref4.message;
           alert(message);
@@ -505,9 +562,31 @@ var ManageProductTab = /*#__PURE__*/function () {
       }
     });
 
+    _classPrivateFieldInitSpec(this, _handleProductUpdateCancel, {
+      writable: true,
+      value: function value(target) {
+        var targetTableRow = target.closest('tr');
+        var id = target.dataset.productId;
+
+        var product = _classPrivateFieldGet(_this, _vendingMachine).productList[id];
+
+        var name = product.name,
+            price = product.price,
+            stock = product.stock;
+        targetTableRow.insertAdjacentHTML('afterend', _template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.PRODUCT_TABLE_ROW({
+          name: name,
+          price: price,
+          stock: stock,
+          id: id
+        }));
+        targetTableRow.remove();
+      }
+    });
+
+    //멤버변수 생성
     _classPrivateFieldSet(this, _vendingMachine, machine);
 
-    _classPrivateFieldSet(this, _manageContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_2__.manageProductTemplate));
+    _classPrivateFieldSet(this, _manageContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.MANAGE_PRODUCT));
 
     _classPrivateFieldSet(this, _addProductForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#add-product-form', _classPrivateFieldGet(this, _manageContainer)));
 
@@ -517,7 +596,8 @@ var ManageProductTab = /*#__PURE__*/function () {
 
     _classPrivateFieldSet(this, _addProductStockInput, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#add-product-stock-input', _classPrivateFieldGet(this, _manageContainer)));
 
-    _classPrivateFieldSet(this, _productStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#product-status-table', _classPrivateFieldGet(this, _manageContainer)));
+    _classPrivateFieldSet(this, _productStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#product-status-table', _classPrivateFieldGet(this, _manageContainer))); //이벤트 바인딩
+
 
     _classPrivateFieldGet(this, _addProductForm).addEventListener('submit', _classPrivateFieldGet(this, _handleAddProductForm));
 
@@ -592,7 +672,7 @@ var PurchaseProductTab = /*#__PURE__*/function () {
       value: void 0
     });
 
-    _classPrivateFieldSet(this, _purchaseContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.purchaseTemplate));
+    _classPrivateFieldSet(this, _purchaseContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.TEMPLATE.PURCHASE));
   }
 
   _createClass(PurchaseProductTab, [{
@@ -707,7 +787,7 @@ var Router = /*#__PURE__*/_createClass(function Router() {
       var main = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('main');
 
       if (!_classPrivateFieldGet(_this, _renderList)[path]) {
-        var notFoundContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_5__.notFoundTemplate);
+        var notFoundContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_5__.TEMPLATE.NOT_FOUND);
 
         _classPrivateFieldGet(_this, _app).replaceChild(notFoundContainer, main);
 
@@ -731,6 +811,7 @@ var Router = /*#__PURE__*/_createClass(function Router() {
     }
   });
 
+  //멤버변수 생성
   _classPrivateFieldSet(this, _vendingMachine, new _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_0__["default"]());
 
   _classPrivateFieldSet(this, _renderList, {
@@ -741,7 +822,8 @@ var Router = /*#__PURE__*/_createClass(function Router() {
 
   _classPrivateFieldSet(this, _app, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#app'));
 
-  _classPrivateFieldSet(this, _tabMenuNavigation, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#tab-menu-navigation'));
+  _classPrivateFieldSet(this, _tabMenuNavigation, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#tab-menu-navigation')); //이벤트 바인딩
+
 
   window.addEventListener('popstate', _classPrivateFieldGet(this, _render));
   window.addEventListener('DOMContentLoaded', _classPrivateFieldGet(this, _render));
@@ -768,31 +850,28 @@ function _updateCurrentTabMenu2(path) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "manageProductTemplate": () => (/* binding */ manageProductTemplate),
-/* harmony export */   "addChangeTemplate": () => (/* binding */ addChangeTemplate),
-/* harmony export */   "productTableRow": () => (/* binding */ productTableRow),
-/* harmony export */   "updateProductTableRow": () => (/* binding */ updateProductTableRow),
-/* harmony export */   "purchaseTemplate": () => (/* binding */ purchaseTemplate),
-/* harmony export */   "notFoundTemplate": () => (/* binding */ notFoundTemplate)
+/* harmony export */   "TEMPLATE": () => (/* binding */ TEMPLATE)
 /* harmony export */ });
-var manageProductTemplate = "\n<section title=\"\uC0C1\uD488 \uC815\uBCF4\">\n  <form id=\"add-product-form\">\n    <fieldset>\n      <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n      <input type=\"text\" id=\"add-product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n      <input type=\"number\" id=\"add-product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n      <input type=\"number\" id=\"add-product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n      <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n    </fieldset>\n  </form>\n</section>\n<section class=\"table-section\" title=\"\uC0C1\uD488 \uD604\uD669\">\n  <table id=\"product-status-table\">\n    <caption>\n      \uC0C1\uD488 \uD604\uD669\n    </caption>\n    <tr>\n      <th>\uC0C1\uD488\uBA85</th>\n      <th>\uAC00\uACA9</th>\n      <th>\uC218\uB7C9</th>\n      <th>\uAD00\uB9AC</th>\n    </tr>\n  </table>\n</section>";
-var addChangeTemplate = "\n<section title=\"\uC794\uB3C8 \uCDA9\uC804\">\n  <form id=\"add-change-form\">\n    <label for=\"\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n    <div>\n      <input type=\"number\" id=\"money-input\" placeholder=\"\uAE08\uC561\" />\n      <button type=\"submit\" class=\"submit-button\">\uCDA9\uC804</button>\n    </div>\n  </form>\n  <p>\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-change\">0</span>\uC6D0</p>\n</section>\n<section class=\"table-section\" title=\"\uC790\uD310\uAE30 \uD604\uD669\">\n  <table id=\"coin-status-table\">\n    <caption>\n      \uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\n    </caption>\n    <tr>\n      <th>\uB3D9\uC804</th>\n      <th>\uAC1C\uC218</th>\n    </tr>\n    <tr>\n      <td>500\uC6D0</td>\n      <td data-coin-name='FIVE_HUNDRED_WON'>0\uAC1C</td>\n    </tr>\n    <tr>\n      <td>100\uC6D0</td>\n      <td data-coin-name='ONE_HUNDRED_WON'>0\uAC1C</td>\n    </tr>\n    <tr>\n      <td>50\uC6D0</td>\n      <td data-coin-name='FIFTY_WON'>0\uAC1C</td>\n    </tr>\n    <tr>\n      <td>10\uC6D0</td>\n      <td data-coin-name='TEN_WON'>0\uAC1C</td>\n    </tr>\n  </table>\n</section>";
-var productTableRow = function productTableRow(_ref) {
-  var name = _ref.name,
-      price = _ref.price,
-      stock = _ref.stock,
-      id = _ref.id;
-  return "\n<tr>\n  <td class=\"product-name\">".concat(name, "</td>\n  <td class=\"product-price\">").concat(price, "</td>\n  <td class=\"product-stock\">").concat(stock, "</td>\n  <td>\n    <div class=\"table-button-wrapper\">\n      <button type=\"button\" class=\"update-product-button\" data-product-id=").concat(id, ">\uC218\uC815</button>\n      <button type=\"button\" class=\"remove-product-button\" data-product-id=").concat(id, ">\uC0AD\uC81C</button>\n    </div>\n  </td>\n</tr>\n");
+var TEMPLATE = {
+  MANAGE_PRODUCT: "\n    <section title=\"\uC0C1\uD488 \uC815\uBCF4\">\n      <form id=\"add-product-form\">\n        <fieldset>\n          <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n          <input type=\"text\" id=\"add-product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n          <input type=\"number\" id=\"add-product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n          <input type=\"number\" id=\"add-product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n          <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n        </fieldset>\n      </form>\n    </section>\n    <section class=\"table-section\" title=\"\uC0C1\uD488 \uD604\uD669\">\n      <table id=\"product-status-table\">\n        <caption>\n          \uC0C1\uD488 \uD604\uD669\n        </caption>\n        <tr>\n          <th>\uC0C1\uD488\uBA85</th>\n          <th>\uAC00\uACA9</th>\n          <th>\uC218\uB7C9</th>\n          <th>\uAD00\uB9AC</th>\n        </tr>\n      </table>\n    </section>\n  ",
+  ADD_CHANGE: "\n    <section title=\"\uC794\uB3C8 \uCDA9\uC804\">\n      <form id=\"add-change-form\">\n        <label for=\"\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n        <div>\n          <input type=\"number\" id=\"money-input\" placeholder=\"\uAE08\uC561\" />\n          <button type=\"submit\" class=\"submit-button\">\uCDA9\uC804</button>\n        </div>\n      </form>\n      <p>\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-change\">0</span>\uC6D0</p>\n    </section>\n    <section class=\"table-section\" title=\"\uC790\uD310\uAE30 \uD604\uD669\">\n      <table id=\"coin-status-table\">\n        <caption>\n          \uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\n        </caption>\n        <tr>\n          <th>\uB3D9\uC804</th>\n          <th>\uAC1C\uC218</th>\n        </tr>\n        <tr>\n          <td>500\uC6D0</td>\n          <td data-coin-name='FIVE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>100\uC6D0</td>\n          <td data-coin-name='ONE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>50\uC6D0</td>\n          <td data-coin-name='FIFTY_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>10\uC6D0</td>\n          <td data-coin-name='TEN_WON'>0\uAC1C</td>\n        </tr>\n      </table>\n    </section>\n  ",
+  PRODUCT_TABLE_ROW: function PRODUCT_TABLE_ROW(_ref) {
+    var name = _ref.name,
+        price = _ref.price,
+        stock = _ref.stock,
+        id = _ref.id;
+    return "\n    <tr>\n      <td class=\"product-name\">".concat(name, "</td>\n      <td class=\"product-price\">").concat(price, "</td>\n      <td class=\"product-stock\">").concat(stock, "</td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"update-product-button\" data-product-id=").concat(id, ">\uC218\uC815</button>\n          <button type=\"button\" class=\"remove-product-button\" data-product-id=").concat(id, ">\uC0AD\uC81C</button>\n        </div>\n      </td>\n    </tr>\n  ");
+  },
+  UPDATE_PRODUCT_TABLE_ROW: function UPDATE_PRODUCT_TABLE_ROW(_ref2) {
+    var name = _ref2.name,
+        price = _ref2.price,
+        stock = _ref2.stock,
+        id = _ref2.id;
+    return "\n    <tr>\n      <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n      <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n      <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n          \uD655\uC778\n          </button>\n          <button type=\"button\" class=\"cancel-update-button\" data-product-id=").concat(id, ">\n          \uCDE8\uC18C\n          </button>\n        </div>\n      </td>\n    </tr>\n  ");
+  },
+  PURCHASE: "<div>\uC544\uC9C1 \uACF5\uC0AC\uC911\uC785\uB2C8\uB2E4 \uD83D\uDEAB </div>",
+  NOT_FOUND: "\n    <section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n      <h2>\uD83D\uDED2 Page Not Found</h2>\n      <a href=\"#/manage\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n    </section>\n  "
 };
-var updateProductTableRow = function updateProductTableRow(_ref2) {
-  var name = _ref2.name,
-      price = _ref2.price,
-      stock = _ref2.stock,
-      id = _ref2.id;
-  return "\n<tr>\n  <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n  <td>\n    <div class=\"table-button-wrapper\">\n      <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n      \uD655\uC778\n      </button>\n    </div>\n  </td>\n</tr>\n");
-};
-var purchaseTemplate = '<div>아직 공사중입니다 🚫</div>';
-var notFoundTemplate = "\n<section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n  <h2>\uD83D\uDED2 Page Not Found</h2>\n  <a href=\"#/manage\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n</section>";
 
 /***/ }),
 
@@ -816,7 +895,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  word-break: keep-all;\n  line-height: 1.5;\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\n}\n\nbody {\n  background-color: #f9f9f9;\n  display: flex;\n  justify-content: center;\n}\n\n#app {\n  width: 600px;\n  min-height: 675px;\n  margin-top: 32px;\n  background-color: white;\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 45px 60px;\n  gap: 52px;\n}\n\nmain {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 52px;\n  width: 100%;\n}\n\nbutton {\n  padding: 8px;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer;\n  background-color: #f5f5f5;\n}\n\nbutton:hover {\n  background-color: #00bcd429;\n}\n\ninput:focus {\n  outline: none;\n}\n\n/* 숫자 입력란 화살표 숨김 */\n/* Chrome, Safari, Edge, Opera */\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type='number'] {\n  -moz-appearance: textfield;\n}\n\n.not-found-section {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 20px;\n}\n", "",{"version":3,"sources":["webpack://./src/css/base.css"],"names":[],"mappings":"AAEA;EACE,SAAS;EACT,UAAU;EACV,sBAAsB;EACtB,oBAAoB;EACpB,gBAAgB;EAChB,0BAA0B;EAC1B;;wEAEsE;AACxE;;AAEA;EACE,yBAAyB;EACzB,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,YAAY;EACZ,iBAAiB;EACjB,gBAAgB;EAChB,uBAAuB;EACvB,qCAAqC;EACrC,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,kBAAkB;EAClB,SAAS;AACX;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,yBAAyB;AAC3B;;AAEA;EACE,2BAA2B;AAC7B;;AAEA;EACE,aAAa;AACf;;AAEA,kBAAkB;AAClB,gCAAgC;AAChC;;EAEE,wBAAwB;EACxB,SAAS;AACX;;AAEA,YAAY;AACZ;EACE,0BAA0B;AAC5B;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX","sourcesContent":["@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');\n\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  word-break: keep-all;\n  line-height: 1.5;\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\n}\n\nbody {\n  background-color: #f9f9f9;\n  display: flex;\n  justify-content: center;\n}\n\n#app {\n  width: 600px;\n  min-height: 675px;\n  margin-top: 32px;\n  background-color: white;\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 45px 60px;\n  gap: 52px;\n}\n\nmain {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 52px;\n  width: 100%;\n}\n\nbutton {\n  padding: 8px;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer;\n  background-color: #f5f5f5;\n}\n\nbutton:hover {\n  background-color: #00bcd429;\n}\n\ninput:focus {\n  outline: none;\n}\n\n/* 숫자 입력란 화살표 숨김 */\n/* Chrome, Safari, Edge, Opera */\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type='number'] {\n  -moz-appearance: textfield;\n}\n\n.not-found-section {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 20px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n\n  box-sizing: border-box;\n\n  word-break: keep-all;\n  line-height: 1.5;\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n\n  background-color: var(--default-bg-color);\n}\n\n#app {\n  width: 600px;\n  min-height: 675px;\n\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 52px;\n\n  margin-top: 32px;\n  padding: 45px 60px;\n\n  background-color: var(--default--white-color);\n  border: 1px solid var(--main-border-color);\n}\n\nmain {\n  width: 100%;\n\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 52px;\n}\n\nbutton {\n  background-color: var(--default-button-bg-color);\n  border: none;\n  border-radius: 4px;\n\n  padding: 8px;\n\n  cursor: pointer;\n}\n\nbutton:hover {\n  background-color: var(--default-button-hover-bg-color);\n}\n\ninput:focus {\n  outline: none;\n}\n\n/* 숫자 입력란 화살표 숨김 */\n/* Chrome, Safari, Edge, Opera */\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type='number'] {\n  -moz-appearance: textfield;\n}\n\n.not-found-section {\n  width: 100%;\n\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 20px;\n}\n", "",{"version":3,"sources":["webpack://./src/css/base.css"],"names":[],"mappings":"AAEA;EACE,SAAS;EACT,UAAU;;EAEV,sBAAsB;;EAEtB,oBAAoB;EACpB,gBAAgB;EAChB,0BAA0B;EAC1B;;wEAEsE;AACxE;;AAEA;EACE,aAAa;EACb,uBAAuB;;EAEvB,yCAAyC;AAC3C;;AAEA;EACE,YAAY;EACZ,iBAAiB;;EAEjB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;;EAET,gBAAgB;EAChB,kBAAkB;;EAElB,6CAA6C;EAC7C,0CAA0C;AAC5C;;AAEA;EACE,WAAW;;EAEX,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,gDAAgD;EAChD,YAAY;EACZ,kBAAkB;;EAElB,YAAY;;EAEZ,eAAe;AACjB;;AAEA;EACE,sDAAsD;AACxD;;AAEA;EACE,aAAa;AACf;;AAEA,kBAAkB;AAClB,gCAAgC;AAChC;;EAEE,wBAAwB;EACxB,SAAS;AACX;;AAEA,YAAY;AACZ;EACE,0BAA0B;AAC5B;;AAEA;EACE,WAAW;;EAEX,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX","sourcesContent":["@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');\n\n* {\n  margin: 0;\n  padding: 0;\n\n  box-sizing: border-box;\n\n  word-break: keep-all;\n  line-height: 1.5;\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n\n  background-color: var(--default-bg-color);\n}\n\n#app {\n  width: 600px;\n  min-height: 675px;\n\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 52px;\n\n  margin-top: 32px;\n  padding: 45px 60px;\n\n  background-color: var(--default--white-color);\n  border: 1px solid var(--main-border-color);\n}\n\nmain {\n  width: 100%;\n\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 52px;\n}\n\nbutton {\n  background-color: var(--default-button-bg-color);\n  border: none;\n  border-radius: 4px;\n\n  padding: 8px;\n\n  cursor: pointer;\n}\n\nbutton:hover {\n  background-color: var(--default-button-hover-bg-color);\n}\n\ninput:focus {\n  outline: none;\n}\n\n/* 숫자 입력란 화살표 숨김 */\n/* Chrome, Safari, Edge, Opera */\ninput::-webkit-outer-spin-button,\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type='number'] {\n  -moz-appearance: textfield;\n}\n\n.not-found-section {\n  width: 100%;\n\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 20px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -842,7 +921,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "fieldset {\n  border: none;\n  display: flex;\n  gap: 5px;\n}\n\nlegend {\n  margin-bottom: 5px;\n}\n\ninput {\n  width: 120px;\n  border: 1px solid #b4b4b4;\n  border-radius: 4px;\n  padding: 8px;\n}\n\n.submit-button {\n  padding: 10px 15px;\n  background-color: #00bcd4;\n  font-weight: bold;\n  color: white;\n}\n\n.submit-button:hover {\n  background-color: #80deea;\n  color: #424242;\n}\n\n#add-change-form {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  gap: 5px;\n  margin-bottom: 5px;\n}\n\n#add-change-form input {\n  width: 300px;\n}\n", "",{"version":3,"sources":["webpack://./src/css/form.css"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,aAAa;EACb,QAAQ;AACV;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,YAAY;EACZ,yBAAyB;EACzB,kBAAkB;EAClB,YAAY;AACd;;AAEA;EACE,kBAAkB;EAClB,yBAAyB;EACzB,iBAAiB;EACjB,YAAY;AACd;;AAEA;EACE,yBAAyB;EACzB,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,QAAQ;EACR,kBAAkB;AACpB;;AAEA;EACE,YAAY;AACd","sourcesContent":["fieldset {\n  border: none;\n  display: flex;\n  gap: 5px;\n}\n\nlegend {\n  margin-bottom: 5px;\n}\n\ninput {\n  width: 120px;\n  border: 1px solid #b4b4b4;\n  border-radius: 4px;\n  padding: 8px;\n}\n\n.submit-button {\n  padding: 10px 15px;\n  background-color: #00bcd4;\n  font-weight: bold;\n  color: white;\n}\n\n.submit-button:hover {\n  background-color: #80deea;\n  color: #424242;\n}\n\n#add-change-form {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  gap: 5px;\n  margin-bottom: 5px;\n}\n\n#add-change-form input {\n  width: 300px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "fieldset {\n  display: flex;\n  gap: 5px;\n\n  border: none;\n}\n\nlegend {\n  margin-bottom: 5px;\n}\n\ninput {\n  width: 120px;\n\n  padding: 8px;\n\n  border: 1px solid var(--input-border-color);\n  border-radius: 4px;\n}\n\n.submit-button {\n  background-color: var(--submit-button-bg-color);\n\n  padding: 10px 15px;\n\n  color: var(--default--white-color);\n  font-weight: bold;\n}\n\n.submit-button:hover {\n  background-color: var(--submit-button-hover-bg-color);\n  color: var(--submit-button-hover-text-color);\n}\n\n#add-change-form {\n  width: 100%;\n\n  display: flex;\n  flex-direction: column;\n  gap: 5px;\n\n  margin-bottom: 5px;\n}\n\n#add-change-form input {\n  width: 300px;\n}\n", "",{"version":3,"sources":["webpack://./src/css/form.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,QAAQ;;EAER,YAAY;AACd;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,YAAY;;EAEZ,YAAY;;EAEZ,2CAA2C;EAC3C,kBAAkB;AACpB;;AAEA;EACE,+CAA+C;;EAE/C,kBAAkB;;EAElB,kCAAkC;EAClC,iBAAiB;AACnB;;AAEA;EACE,qDAAqD;EACrD,4CAA4C;AAC9C;;AAEA;EACE,WAAW;;EAEX,aAAa;EACb,sBAAsB;EACtB,QAAQ;;EAER,kBAAkB;AACpB;;AAEA;EACE,YAAY;AACd","sourcesContent":["fieldset {\n  display: flex;\n  gap: 5px;\n\n  border: none;\n}\n\nlegend {\n  margin-bottom: 5px;\n}\n\ninput {\n  width: 120px;\n\n  padding: 8px;\n\n  border: 1px solid var(--input-border-color);\n  border-radius: 4px;\n}\n\n.submit-button {\n  background-color: var(--submit-button-bg-color);\n\n  padding: 10px 15px;\n\n  color: var(--default--white-color);\n  font-weight: bold;\n}\n\n.submit-button:hover {\n  background-color: var(--submit-button-hover-bg-color);\n  color: var(--submit-button-hover-text-color);\n}\n\n#add-change-form {\n  width: 100%;\n\n  display: flex;\n  flex-direction: column;\n  gap: 5px;\n\n  margin-bottom: 5px;\n}\n\n#add-change-form input {\n  width: 300px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -864,10 +943,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_base_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./base.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/base.css");
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./nav.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/nav.css");
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_form_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./form.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/form.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_form_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./form.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/form.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./nav.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/nav.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_table_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./table.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/table.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_variables_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./variables.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/variables.css");
 // Imports
+
 
 
 
@@ -876,9 +957,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_base_css__WEBPACK_IMPORTED_MODULE_2__["default"]);
-___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_3__["default"]);
-___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_form_css__WEBPACK_IMPORTED_MODULE_4__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_form_css__WEBPACK_IMPORTED_MODULE_3__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_4__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_table_css__WEBPACK_IMPORTED_MODULE_5__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_variables_css__WEBPACK_IMPORTED_MODULE_6__["default"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n", "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
 // Exports
@@ -906,7 +988,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "header {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 32px;\n}\n\n#app-title {\n  font-size: 34px;\n  font-weight: 600;\n}\n\nnav {\n  display: flex;\n  gap: 10px;\n}\n\n.tab-menu-button {\n  color: #000000;\n  padding: 10px 0;\n  width: 120px;\n  font-size: 1rem;\n  padding: 8px;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  text-align: center;\n  text-decoration: none;\n}\n\n.tab-menu-button.current {\n  background-color: #00bcd429;\n  cursor: default;\n}\n\n.tab-menu-button:hover {\n  background-color: #00bcd429;\n}\n\n.tab-menu-button:visited {\n  color: #000000;\n}\n", "",{"version":3,"sources":["webpack://./src/css/nav.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,aAAa;EACb,SAAS;AACX;;AAEA;EACE,cAAc;EACd,eAAe;EACf,YAAY;EACZ,eAAe;EACf,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,yBAAyB;EACzB,kBAAkB;EAClB,qBAAqB;AACvB;;AAEA;EACE,2BAA2B;EAC3B,eAAe;AACjB;;AAEA;EACE,2BAA2B;AAC7B;;AAEA;EACE,cAAc;AAChB","sourcesContent":["header {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 32px;\n}\n\n#app-title {\n  font-size: 34px;\n  font-weight: 600;\n}\n\nnav {\n  display: flex;\n  gap: 10px;\n}\n\n.tab-menu-button {\n  color: #000000;\n  padding: 10px 0;\n  width: 120px;\n  font-size: 1rem;\n  padding: 8px;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  text-align: center;\n  text-decoration: none;\n}\n\n.tab-menu-button.current {\n  background-color: #00bcd429;\n  cursor: default;\n}\n\n.tab-menu-button:hover {\n  background-color: #00bcd429;\n}\n\n.tab-menu-button:visited {\n  color: #000000;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "header {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 32px;\n}\n\n#app-title {\n  font-size: 34px;\n  font-weight: 600;\n}\n\nnav {\n  display: flex;\n  gap: 10px;\n}\n\n.tab-menu-button {\n  width: 120px;\n\n  padding: 8px 0;\n\n  background-color: var(--tab-menu-button-bg-color);\n  border: none;\n  border-radius: 4px;\n\n  font-size: 1rem;\n  text-align: center;\n  text-decoration: none;\n  cursor: pointer;\n}\n\n.tab-menu-button.current {\n  background-color: var(--tab-menu-button-stress-bg-color);\n  cursor: default;\n}\n\n.tab-menu-button:hover {\n  background-color: var(--tab-menu-button-stress-bg-color);\n}\n\n.tab-menu-button:visited {\n  color: var(--default--black-color);\n}\n", "",{"version":3,"sources":["webpack://./src/css/nav.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,aAAa;EACb,SAAS;AACX;;AAEA;EACE,YAAY;;EAEZ,cAAc;;EAEd,iDAAiD;EACjD,YAAY;EACZ,kBAAkB;;EAElB,eAAe;EACf,kBAAkB;EAClB,qBAAqB;EACrB,eAAe;AACjB;;AAEA;EACE,wDAAwD;EACxD,eAAe;AACjB;;AAEA;EACE,wDAAwD;AAC1D;;AAEA;EACE,kCAAkC;AACpC","sourcesContent":["header {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 32px;\n}\n\n#app-title {\n  font-size: 34px;\n  font-weight: 600;\n}\n\nnav {\n  display: flex;\n  gap: 10px;\n}\n\n.tab-menu-button {\n  width: 120px;\n\n  padding: 8px 0;\n\n  background-color: var(--tab-menu-button-bg-color);\n  border: none;\n  border-radius: 4px;\n\n  font-size: 1rem;\n  text-align: center;\n  text-decoration: none;\n  cursor: pointer;\n}\n\n.tab-menu-button.current {\n  background-color: var(--tab-menu-button-stress-bg-color);\n  cursor: default;\n}\n\n.tab-menu-button:hover {\n  background-color: var(--tab-menu-button-stress-bg-color);\n}\n\n.tab-menu-button:visited {\n  color: var(--default--black-color);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -932,7 +1014,33 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".table-section {\n  width: 100%;\n}\n\ncaption {\n  font-size: 20px;\n  font-weight: 600;\n  margin-bottom: 16px;\n}\n\ntd,\nth {\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px 0;\n  text-align: center;\n}\n\ntd {\n  height: 65px;\n}\n\nth {\n  border-top: 1px solid #dcdcdc;\n}\n\ntable {\n  border-collapse: collapse;\n  margin: 0 auto;\n}\n\n.table-button-wrapper {\n  width: 90px;\n  margin: auto;\n  display: flex;\n  justify-content: center;\n  gap: 8px;\n}\n\n.confirm-update-button {\n  width: 100%;\n}\n\n#product-status-table tr input {\n  width: 90%;\n  margin: auto;\n  font-size: 1rem;\n}\n\n#product-status-table th:nth-child(1) {\n  width: 160px;\n}\n#product-status-table th:nth-child(2) {\n  width: 60px;\n}\n#product-status-table th:nth-child(3) {\n  width: 50px;\n}\n#product-status-table th:nth-child(4) {\n  width: 140px;\n}\n\n#coin-status-table td {\n  width: 100px;\n}\n", "",{"version":3,"sources":["webpack://./src/css/table.css"],"names":[],"mappings":"AAAA;EACE,WAAW;AACb;;AAEA;EACE,eAAe;EACf,gBAAgB;EAChB,mBAAmB;AACrB;;AAEA;;EAEE,gCAAgC;EAChC,cAAc;EACd,kBAAkB;AACpB;;AAEA;EACE,YAAY;AACd;;AAEA;EACE,6BAA6B;AAC/B;;AAEA;EACE,yBAAyB;EACzB,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,aAAa;EACb,uBAAuB;EACvB,QAAQ;AACV;;AAEA;EACE,WAAW;AACb;;AAEA;EACE,UAAU;EACV,YAAY;EACZ,eAAe;AACjB;;AAEA;EACE,YAAY;AACd;AACA;EACE,WAAW;AACb;AACA;EACE,WAAW;AACb;AACA;EACE,YAAY;AACd;;AAEA;EACE,YAAY;AACd","sourcesContent":[".table-section {\n  width: 100%;\n}\n\ncaption {\n  font-size: 20px;\n  font-weight: 600;\n  margin-bottom: 16px;\n}\n\ntd,\nth {\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px 0;\n  text-align: center;\n}\n\ntd {\n  height: 65px;\n}\n\nth {\n  border-top: 1px solid #dcdcdc;\n}\n\ntable {\n  border-collapse: collapse;\n  margin: 0 auto;\n}\n\n.table-button-wrapper {\n  width: 90px;\n  margin: auto;\n  display: flex;\n  justify-content: center;\n  gap: 8px;\n}\n\n.confirm-update-button {\n  width: 100%;\n}\n\n#product-status-table tr input {\n  width: 90%;\n  margin: auto;\n  font-size: 1rem;\n}\n\n#product-status-table th:nth-child(1) {\n  width: 160px;\n}\n#product-status-table th:nth-child(2) {\n  width: 60px;\n}\n#product-status-table th:nth-child(3) {\n  width: 50px;\n}\n#product-status-table th:nth-child(4) {\n  width: 140px;\n}\n\n#coin-status-table td {\n  width: 100px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".table-section {\n  width: 100%;\n}\n\ncaption {\n  margin-bottom: 16px;\n\n  font-size: 20px;\n  font-weight: 600;\n}\n\ntd,\nth {\n  padding: 8px 0;\n\n  border-bottom: 1px solid var(--table-border-color);\n\n  text-align: center;\n}\n\ntd {\n  height: 65px;\n}\n\nth {\n  border-top: 1px solid var(--table-border-color);\n}\n\ntable {\n  margin: 0 auto;\n\n  border-collapse: collapse;\n}\n\n.table-button-wrapper {\n  width: 90px;\n\n  display: flex;\n  justify-content: center;\n  gap: 8px;\n\n  margin: auto;\n}\n\n.confirm-update-button {\n  width: 100%;\n}\n\n#product-status-table tr input {\n  width: 90%;\n\n  margin: auto;\n\n  font-size: 1rem;\n}\n\n#product-status-table th:nth-child(1) {\n  width: 160px;\n}\n#product-status-table th:nth-child(2) {\n  width: 60px;\n}\n#product-status-table th:nth-child(3) {\n  width: 50px;\n}\n#product-status-table th:nth-child(4) {\n  width: 140px;\n}\n\n#coin-status-table td {\n  width: 100px;\n}\n", "",{"version":3,"sources":["webpack://./src/css/table.css"],"names":[],"mappings":"AAAA;EACE,WAAW;AACb;;AAEA;EACE,mBAAmB;;EAEnB,eAAe;EACf,gBAAgB;AAClB;;AAEA;;EAEE,cAAc;;EAEd,kDAAkD;;EAElD,kBAAkB;AACpB;;AAEA;EACE,YAAY;AACd;;AAEA;EACE,+CAA+C;AACjD;;AAEA;EACE,cAAc;;EAEd,yBAAyB;AAC3B;;AAEA;EACE,WAAW;;EAEX,aAAa;EACb,uBAAuB;EACvB,QAAQ;;EAER,YAAY;AACd;;AAEA;EACE,WAAW;AACb;;AAEA;EACE,UAAU;;EAEV,YAAY;;EAEZ,eAAe;AACjB;;AAEA;EACE,YAAY;AACd;AACA;EACE,WAAW;AACb;AACA;EACE,WAAW;AACb;AACA;EACE,YAAY;AACd;;AAEA;EACE,YAAY;AACd","sourcesContent":[".table-section {\n  width: 100%;\n}\n\ncaption {\n  margin-bottom: 16px;\n\n  font-size: 20px;\n  font-weight: 600;\n}\n\ntd,\nth {\n  padding: 8px 0;\n\n  border-bottom: 1px solid var(--table-border-color);\n\n  text-align: center;\n}\n\ntd {\n  height: 65px;\n}\n\nth {\n  border-top: 1px solid var(--table-border-color);\n}\n\ntable {\n  margin: 0 auto;\n\n  border-collapse: collapse;\n}\n\n.table-button-wrapper {\n  width: 90px;\n\n  display: flex;\n  justify-content: center;\n  gap: 8px;\n\n  margin: auto;\n}\n\n.confirm-update-button {\n  width: 100%;\n}\n\n#product-status-table tr input {\n  width: 90%;\n\n  margin: auto;\n\n  font-size: 1rem;\n}\n\n#product-status-table th:nth-child(1) {\n  width: 160px;\n}\n#product-status-table th:nth-child(2) {\n  width: 60px;\n}\n#product-status-table th:nth-child(3) {\n  width: 50px;\n}\n#product-status-table th:nth-child(4) {\n  width: 140px;\n}\n\n#coin-status-table td {\n  width: 100px;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/css/variables.css":
+/*!*********************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/css/variables.css ***!
+  \*********************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --default--white-color: #ffffff;\n  --default--black-color: #000000;\n  --default-bg-color: #f9f9f9;\n  --default-button-bg-color: #f5f5f5;\n  --default-button-hover-bg-color: #00bcd429;\n\n  --main-bg-color: #ffffff;\n  --main-border-color: #0000001f;\n\n  --input-border-color: #b4b4b4;\n\n  --submit-button-bg-color: #00bcd4;\n  --submit-button-hover-bg-color: #80deea;\n  --submit-button-hover-text-color: #424242;\n\n  --tab-menu-button-bg-color: #f5f5f5;\n  --tab-menu-button-stress-bg-color: #00bcd429;\n\n  --table-border-color: #dcdcdc;\n}\n", "",{"version":3,"sources":["webpack://./src/css/variables.css"],"names":[],"mappings":"AAAA;EACE,+BAA+B;EAC/B,+BAA+B;EAC/B,2BAA2B;EAC3B,kCAAkC;EAClC,0CAA0C;;EAE1C,wBAAwB;EACxB,8BAA8B;;EAE9B,6BAA6B;;EAE7B,iCAAiC;EACjC,uCAAuC;EACvC,yCAAyC;;EAEzC,mCAAmC;EACnC,4CAA4C;;EAE5C,6BAA6B;AAC/B","sourcesContent":[":root {\n  --default--white-color: #ffffff;\n  --default--black-color: #000000;\n  --default-bg-color: #f9f9f9;\n  --default-button-bg-color: #f5f5f5;\n  --default-button-hover-bg-color: #00bcd429;\n\n  --main-bg-color: #ffffff;\n  --main-border-color: #0000001f;\n\n  --input-border-color: #b4b4b4;\n\n  --submit-button-bg-color: #00bcd4;\n  --submit-button-hover-bg-color: #80deea;\n  --submit-button-hover-text-color: #424242;\n\n  --tab-menu-button-bg-color: #f5f5f5;\n  --tab-menu-button-stress-bg-color: #00bcd429;\n\n  --table-border-color: #dcdcdc;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1452,14 +1560,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ MoneyBox)
 /* harmony export */ });
 /* harmony import */ var _RandomStrategy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RandomStrategy */ "./src/js/domain/RandomStrategy.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
+
 
 class MoneyBox {
     constructor() {
         this._coinStatusList = [
-            { name: 'FIVE_HUNDRED_WON', value: 500, count: 0 },
-            { name: 'ONE_HUNDRED_WON', value: 100, count: 0 },
-            { name: 'FIFTY_WON', value: 50, count: 0 },
-            { name: 'TEN_WON', value: 10, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_100.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_100.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_50.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_50.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.VALUE, count: 0 },
         ];
         this.coinDistributeStrategy = _RandomStrategy__WEBPACK_IMPORTED_MODULE_0__["default"];
     }
@@ -1467,26 +1579,25 @@ class MoneyBox {
         this.coinDistributeStrategy = strategy;
     }
     get totalChange() {
-        return this._coinStatusList.reduce((totalAmount, { value, count }) => totalAmount + value * count, 0);
+        const totalChange = this._coinStatusList.reduce((totalAmount, { value, count }) => totalAmount + value * count, 0);
+        return totalChange;
     }
     get coinStatus() {
-        return this._coinStatusList.reduce((totalStatus, { name, count }) => {
+        const totalStatus = {};
+        this._coinStatusList.forEach(({ name, count }) => {
             totalStatus[name] = count;
-            return totalStatus;
-        }, {
-            FIVE_HUNDRED_WON: 0,
-            ONE_HUNDRED_WON: 0,
-            FIFTY_WON: 0,
-            TEN_WON: 0,
         });
+        return totalStatus;
     }
     get coinStatusList() {
         return this._coinStatusList;
     }
     addChange(inputMoney) {
-        const newCoins = this.coinDistributeStrategy.distribute(inputMoney);
-        this._coinStatusList.forEach((coin, index) => {
-            coin.count += newCoins[index].count;
+        const distributedCoinStatusList = this.coinDistributeStrategy.distribute(inputMoney);
+        this._coinStatusList = this._coinStatusList.map((coin, index) => {
+            const cloneCoinObject = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.deepCopy)(coin);
+            cloneCoinObject.count += distributedCoinStatusList[index].count;
+            return cloneCoinObject;
         });
     }
 }
@@ -1505,31 +1616,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+
 
 function getRandomCoin(moneyLeft, value) {
     const maxCount = Math.floor(moneyLeft / value);
     return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.pickNumberInRange)(0, maxCount);
 }
 const RandomStrategy = {
-    // eslint-disable-next-line max-lines-per-function
     distribute(inputMoney) {
         const coinStatusList = [
-            { name: 'FIVE_HUNDRED_WON', value: 500, count: 0 },
-            { name: 'ONE_HUNDRED_WON', value: 100, count: 0 },
-            { name: 'FIFTY_WON', value: 50, count: 0 },
-            { name: 'TEN_WON', value: 10, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_100.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_100.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_50.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_50.VALUE, count: 0 },
+            { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.VALUE, count: 0 },
         ];
         let moneyLeft = inputMoney;
-        coinStatusList.forEach((coin) => {
-            if (coin.name === 'TEN_WON') {
-                coin.count = moneyLeft / coin.value;
-                return;
+        const distributedCoinStatusList = coinStatusList.map((coin) => {
+            const cloneCoinObject = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.deepCopy)(coin);
+            if (cloneCoinObject.name === 'TEN_WON') {
+                cloneCoinObject.count = moneyLeft / cloneCoinObject.value;
+                return cloneCoinObject;
             }
-            const randomCount = getRandomCoin(moneyLeft, coin.value);
-            moneyLeft -= coin.value * randomCount;
-            coin.count = randomCount;
+            const randomCount = getRandomCoin(moneyLeft, cloneCoinObject.value);
+            moneyLeft -= cloneCoinObject.value * randomCount;
+            cloneCoinObject.count = randomCount;
+            return cloneCoinObject;
         });
-        return coinStatusList;
+        return distributedCoinStatusList;
     },
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RandomStrategy);
@@ -1663,7 +1777,10 @@ class VendingMachineProduct {
                 errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.EXCEED_MAX_PRODUCT_NAME_LENGTH,
             },
             { testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isPriceOutOfRange, errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.OUT_OF_PRODUCT_PRICE_RANGE },
-            { testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isInvalidUnitPrice, errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.INVALID_UNIT_PRODUCT_PRICE },
+            {
+                testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isInvalidUnitPrice,
+                errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.INVALID_UNIT_PRODUCT_PRICE,
+            },
             { testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isStockOutOfRange, errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.OUT_OF_PRODUCT_STOCK_RANGE },
             { testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isNotIntegerStock, errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.INVALID_PRODUCT_STOCK },
         ];
@@ -1721,7 +1838,7 @@ function isBelowMinCharge({ money }) {
 function inValidUnitChange({ money }) {
     return money % _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE_RULES.CHANGE_UNIT !== 0;
 }
-function isExceedMaxTotalChange({ money, totalChange }) {
+function isExceedMaxTotalChange({ money, totalChange, }) {
     return totalChange + money > _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE_RULES.MAX_TOTAL_CHANGE;
 }
 // validator function
