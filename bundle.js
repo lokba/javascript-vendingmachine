@@ -255,7 +255,7 @@ var AddChangeTab = /*#__PURE__*/function () {
 
     _classPrivateFieldSet(this, _vendingMachine, machine);
 
-    _classPrivateFieldSet(this, _addChangeContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.addChangeTemplate));
+    _classPrivateFieldSet(this, _addChangeContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.TEMPLATE.ADD_CHANGE));
 
     _classPrivateFieldSet(this, _addChangeForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#add-change-form', _classPrivateFieldGet(this, _addChangeContainer)));
 
@@ -428,7 +428,7 @@ var ManageProductTab = /*#__PURE__*/function () {
             stock: stock
           });
 
-          _classPrivateFieldGet(_this, _productStatusTable).insertAdjacentHTML('beforeend', (0,_template__WEBPACK_IMPORTED_MODULE_2__.productTableRow)({
+          _classPrivateFieldGet(_this, _productStatusTable).insertAdjacentHTML('beforeend', _template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.PRODUCT_TABLE_ROW({
             name: name,
             price: price,
             stock: stock,
@@ -475,7 +475,7 @@ var ManageProductTab = /*#__PURE__*/function () {
         var price = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('.product-price', targetTableRow).textContent;
         var stock = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('.product-stock', targetTableRow).textContent;
         var id = target.dataset.productId;
-        targetTableRow.insertAdjacentHTML('afterend', (0,_template__WEBPACK_IMPORTED_MODULE_2__.updateProductTableRow)({
+        targetTableRow.insertAdjacentHTML('afterend', _template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.UPDATE_PRODUCT_TABLE_ROW({
           name: name,
           price: price,
           stock: stock,
@@ -522,7 +522,7 @@ var ManageProductTab = /*#__PURE__*/function () {
             stock: stock
           });
 
-          targetTableRow.insertAdjacentHTML('afterend', (0,_template__WEBPACK_IMPORTED_MODULE_2__.productTableRow)({
+          targetTableRow.insertAdjacentHTML('afterend', _template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.PRODUCT_TABLE_ROW({
             name: name,
             price: price,
             stock: stock,
@@ -547,7 +547,7 @@ var ManageProductTab = /*#__PURE__*/function () {
         var name = product.name,
             price = product.price,
             stock = product.stock;
-        targetTableRow.insertAdjacentHTML('afterend', (0,_template__WEBPACK_IMPORTED_MODULE_2__.productTableRow)({
+        targetTableRow.insertAdjacentHTML('afterend', _template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.PRODUCT_TABLE_ROW({
           name: name,
           price: price,
           stock: stock,
@@ -559,7 +559,7 @@ var ManageProductTab = /*#__PURE__*/function () {
 
     _classPrivateFieldSet(this, _vendingMachine, machine);
 
-    _classPrivateFieldSet(this, _manageContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_2__.manageProductTemplate));
+    _classPrivateFieldSet(this, _manageContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.MANAGE_PRODUCT));
 
     _classPrivateFieldSet(this, _addProductForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#add-product-form', _classPrivateFieldGet(this, _manageContainer)));
 
@@ -644,7 +644,7 @@ var PurchaseProductTab = /*#__PURE__*/function () {
       value: void 0
     });
 
-    _classPrivateFieldSet(this, _purchaseContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.purchaseTemplate));
+    _classPrivateFieldSet(this, _purchaseContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.TEMPLATE.PURCHASE));
   }
 
   _createClass(PurchaseProductTab, [{
@@ -759,7 +759,7 @@ var Router = /*#__PURE__*/_createClass(function Router() {
       var main = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('main');
 
       if (!_classPrivateFieldGet(_this, _renderList)[path]) {
-        var notFoundContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_5__.notFoundTemplate);
+        var notFoundContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_5__.TEMPLATE.NOT_FOUND);
 
         _classPrivateFieldGet(_this, _app).replaceChild(notFoundContainer, main);
 
@@ -820,31 +820,28 @@ function _updateCurrentTabMenu2(path) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "manageProductTemplate": () => (/* binding */ manageProductTemplate),
-/* harmony export */   "addChangeTemplate": () => (/* binding */ addChangeTemplate),
-/* harmony export */   "productTableRow": () => (/* binding */ productTableRow),
-/* harmony export */   "updateProductTableRow": () => (/* binding */ updateProductTableRow),
-/* harmony export */   "purchaseTemplate": () => (/* binding */ purchaseTemplate),
-/* harmony export */   "notFoundTemplate": () => (/* binding */ notFoundTemplate)
+/* harmony export */   "TEMPLATE": () => (/* binding */ TEMPLATE)
 /* harmony export */ });
-var manageProductTemplate = "\n<section title=\"\uC0C1\uD488 \uC815\uBCF4\">\n  <form id=\"add-product-form\">\n    <fieldset>\n      <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n      <input type=\"text\" id=\"add-product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n      <input type=\"number\" id=\"add-product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n      <input type=\"number\" id=\"add-product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n      <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n    </fieldset>\n  </form>\n</section>\n<section class=\"table-section\" title=\"\uC0C1\uD488 \uD604\uD669\">\n  <table id=\"product-status-table\">\n    <caption>\n      \uC0C1\uD488 \uD604\uD669\n    </caption>\n    <tr>\n      <th>\uC0C1\uD488\uBA85</th>\n      <th>\uAC00\uACA9</th>\n      <th>\uC218\uB7C9</th>\n      <th>\uAD00\uB9AC</th>\n    </tr>\n  </table>\n</section>";
-var addChangeTemplate = "\n<section title=\"\uC794\uB3C8 \uCDA9\uC804\">\n  <form id=\"add-change-form\">\n    <label for=\"\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n    <div>\n      <input type=\"number\" id=\"money-input\" placeholder=\"\uAE08\uC561\" />\n      <button type=\"submit\" class=\"submit-button\">\uCDA9\uC804</button>\n    </div>\n  </form>\n  <p>\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-change\">0</span>\uC6D0</p>\n</section>\n<section class=\"table-section\" title=\"\uC790\uD310\uAE30 \uD604\uD669\">\n  <table id=\"coin-status-table\">\n    <caption>\n      \uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\n    </caption>\n    <tr>\n      <th>\uB3D9\uC804</th>\n      <th>\uAC1C\uC218</th>\n    </tr>\n    <tr>\n      <td>500\uC6D0</td>\n      <td data-coin-name='FIVE_HUNDRED_WON'>0\uAC1C</td>\n    </tr>\n    <tr>\n      <td>100\uC6D0</td>\n      <td data-coin-name='ONE_HUNDRED_WON'>0\uAC1C</td>\n    </tr>\n    <tr>\n      <td>50\uC6D0</td>\n      <td data-coin-name='FIFTY_WON'>0\uAC1C</td>\n    </tr>\n    <tr>\n      <td>10\uC6D0</td>\n      <td data-coin-name='TEN_WON'>0\uAC1C</td>\n    </tr>\n  </table>\n</section>";
-var productTableRow = function productTableRow(_ref) {
-  var name = _ref.name,
-      price = _ref.price,
-      stock = _ref.stock,
-      id = _ref.id;
-  return "\n<tr>\n  <td class=\"product-name\">".concat(name, "</td>\n  <td class=\"product-price\">").concat(price, "</td>\n  <td class=\"product-stock\">").concat(stock, "</td>\n  <td>\n    <div class=\"table-button-wrapper\">\n      <button type=\"button\" class=\"update-product-button\" data-product-id=").concat(id, ">\uC218\uC815</button>\n      <button type=\"button\" class=\"remove-product-button\" data-product-id=").concat(id, ">\uC0AD\uC81C</button>\n    </div>\n  </td>\n</tr>\n");
+var TEMPLATE = {
+  MANAGE_PRODUCT: "\n    <section title=\"\uC0C1\uD488 \uC815\uBCF4\">\n      <form id=\"add-product-form\">\n        <fieldset>\n          <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n          <input type=\"text\" id=\"add-product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n          <input type=\"number\" id=\"add-product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n          <input type=\"number\" id=\"add-product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n          <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n        </fieldset>\n      </form>\n    </section>\n    <section class=\"table-section\" title=\"\uC0C1\uD488 \uD604\uD669\">\n      <table id=\"product-status-table\">\n        <caption>\n          \uC0C1\uD488 \uD604\uD669\n        </caption>\n        <tr>\n          <th>\uC0C1\uD488\uBA85</th>\n          <th>\uAC00\uACA9</th>\n          <th>\uC218\uB7C9</th>\n          <th>\uAD00\uB9AC</th>\n        </tr>\n      </table>\n    </section>\n  ",
+  ADD_CHANGE: "\n    <section title=\"\uC794\uB3C8 \uCDA9\uC804\">\n      <form id=\"add-change-form\">\n        <label for=\"\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n        <div>\n          <input type=\"number\" id=\"money-input\" placeholder=\"\uAE08\uC561\" />\n          <button type=\"submit\" class=\"submit-button\">\uCDA9\uC804</button>\n        </div>\n      </form>\n      <p>\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-change\">0</span>\uC6D0</p>\n    </section>\n    <section class=\"table-section\" title=\"\uC790\uD310\uAE30 \uD604\uD669\">\n      <table id=\"coin-status-table\">\n        <caption>\n          \uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\n        </caption>\n        <tr>\n          <th>\uB3D9\uC804</th>\n          <th>\uAC1C\uC218</th>\n        </tr>\n        <tr>\n          <td>500\uC6D0</td>\n          <td data-coin-name='FIVE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>100\uC6D0</td>\n          <td data-coin-name='ONE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>50\uC6D0</td>\n          <td data-coin-name='FIFTY_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>10\uC6D0</td>\n          <td data-coin-name='TEN_WON'>0\uAC1C</td>\n        </tr>\n      </table>\n    </section>\n  ",
+  PRODUCT_TABLE_ROW: function PRODUCT_TABLE_ROW(_ref) {
+    var name = _ref.name,
+        price = _ref.price,
+        stock = _ref.stock,
+        id = _ref.id;
+    return "\n    <tr>\n      <td class=\"product-name\">".concat(name, "</td>\n      <td class=\"product-price\">").concat(price, "</td>\n      <td class=\"product-stock\">").concat(stock, "</td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"update-product-button\" data-product-id=").concat(id, ">\uC218\uC815</button>\n          <button type=\"button\" class=\"remove-product-button\" data-product-id=").concat(id, ">\uC0AD\uC81C</button>\n        </div>\n      </td>\n    </tr>\n  ");
+  },
+  UPDATE_PRODUCT_TABLE_ROW: function UPDATE_PRODUCT_TABLE_ROW(_ref2) {
+    var name = _ref2.name,
+        price = _ref2.price,
+        stock = _ref2.stock,
+        id = _ref2.id;
+    return "\n    <tr>\n      <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n      <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n      <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n          \uD655\uC778\n          </button>\n          <button type=\"button\" class=\"cancel-update-button\" data-product-id=").concat(id, ">\n          \uCDE8\uC18C\n          </button>\n        </div>\n      </td>\n    </tr>\n  ");
+  },
+  PURCHASE: "<div>\uC544\uC9C1 \uACF5\uC0AC\uC911\uC785\uB2C8\uB2E4 \uD83D\uDEAB </div>",
+  NOT_FOUND: "\n    <section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n      <h2>\uD83D\uDED2 Page Not Found</h2>\n      <a href=\"#/manage\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n    </section>\n  "
 };
-var updateProductTableRow = function updateProductTableRow(_ref2) {
-  var name = _ref2.name,
-      price = _ref2.price,
-      stock = _ref2.stock,
-      id = _ref2.id;
-  return "\n<tr>\n  <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n  <td>\n    <div class=\"table-button-wrapper\">\n      <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n      \uD655\uC778\n      </button>\n      <button type=\"button\" class=\"cancel-update-button\" data-product-id=").concat(id, ">\n      \uCDE8\uC18C\n      </button>\n    </div>\n  </td>\n</tr>\n");
-};
-var purchaseTemplate = '<div>아직 공사중입니다 🚫</div>';
-var notFoundTemplate = "\n<section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n  <h2>\uD83D\uDED2 Page Not Found</h2>\n  <a href=\"#/manage\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n</section>";
 
 /***/ }),
 
