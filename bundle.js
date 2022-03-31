@@ -10,36 +10,22 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
-/* harmony export */   "CONFIRM_MESSAGE": () => (/* binding */ CONFIRM_MESSAGE),
 /* harmony export */   "PRODUCT_RULES": () => (/* binding */ PRODUCT_RULES),
 /* harmony export */   "VENDING_MACHINE_RULES": () => (/* binding */ VENDING_MACHINE_RULES),
 /* harmony export */   "COIN_500": () => (/* binding */ COIN_500),
 /* harmony export */   "COIN_100": () => (/* binding */ COIN_100),
 /* harmony export */   "COIN_50": () => (/* binding */ COIN_50),
-/* harmony export */   "COIN_10": () => (/* binding */ COIN_10)
+/* harmony export */   "COIN_10": () => (/* binding */ COIN_10),
+/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
+/* harmony export */   "CONFIRM_MESSAGE": () => (/* binding */ CONFIRM_MESSAGE)
 /* harmony export */ });
-var ERROR_MESSAGE = {
-  CONTAIN_EMPTY_FIELD_IN_FORM: '상품명, 가격, 수량을 모두 입력해주세요.',
-  EXCEED_MAX_PRODUCT_NAME_LENGTH: '상품명은 10글자를 초과해서는 안됩니다.',
-  DUPLICATE_PRODUCT_NAME: '중복된 상품명의 상품은 등록할 수 없습니다.',
-  OUT_OF_PRODUCT_PRICE_RANGE: '상품 가격은 100원 미만이거나 10000원 초과할 수 없습니다.',
-  INVALID_UNIT_PRODUCT_PRICE: '상품 가격은 10원 단위여야 합니다.',
-  INVALID_PRODUCT_STOCK: '올바른 수량을 입력해주세요',
-  OUT_OF_PRODUCT_STOCK_RANGE: '상품 수량은 1개 미만이거나 20개 초과할 수 없습니다.',
-  NOT_FOUND_PRODUCT_ID: '존재하지 않는 상품 아이디입니다.',
-  BELOW_MIN_CHANGE: '충전 금액은 0원 이하일 수 없습니다.',
-  INVALID_UNIT_CHANGE: '충전 금액은 10원 단위이어야 합니다.',
-  EXCEED_MAX_TOTAL_CHANGE: '최대 보유 금액은 100,000원을 초과할 수 없습니다.'
-};
-var CONFIRM_MESSAGE = '상품을 정말 삭제하시겠습니까?';
 var PRODUCT_RULES = {
   MAX_NAME_LENGTH: 10,
   MIN_PRICE: 100,
   MAX_PRICE: 10000,
   PRICE_UNIT: 10,
-  MAX_STOCK: 20,
-  MIN_STOCK: 1
+  MIN_STOCK: 1,
+  MAX_STOCK: 20
 };
 var VENDING_MACHINE_RULES = {
   CHANGE_UNIT: 10,
@@ -61,6 +47,20 @@ var COIN_10 = {
   NAME: 'TEN_WON',
   VALUE: 10
 };
+var ERROR_MESSAGE = {
+  CONTAIN_EMPTY_FIELD_IN_FORM: '상품명, 가격, 수량을 모두 입력해주세요.',
+  EXCEED_MAX_PRODUCT_NAME_LENGTH: "\uC0C1\uD488\uBA85\uC740 ".concat(PRODUCT_RULES.MAX_NAME_LENGTH, "\uAE00\uC790\uB97C \uCD08\uACFC\uD574\uC11C\uB294 \uC548\uB429\uB2C8\uB2E4."),
+  DUPLICATE_PRODUCT_NAME: '중복된 상품명의 상품은 등록할 수 없습니다.',
+  OUT_OF_PRODUCT_PRICE_RANGE: "\uC0C1\uD488 \uAC00\uACA9\uC740 ".concat(PRODUCT_RULES.MIN_PRICE, "\uC6D0 \uBBF8\uB9CC\uC774\uAC70\uB098 ").concat(PRODUCT_RULES.MAX_PRICE, "\uC6D0 \uCD08\uACFC\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."),
+  INVALID_UNIT_PRODUCT_PRICE: "\uC0C1\uD488 \uAC00\uACA9\uC740 ".concat(PRODUCT_RULES.PRICE_UNIT, "\uC6D0 \uB2E8\uC704\uC5EC\uC57C \uD569\uB2C8\uB2E4."),
+  INVALID_PRODUCT_STOCK: '올바른 수량을 입력해주세요',
+  OUT_OF_PRODUCT_STOCK_RANGE: "\uC0C1\uD488 \uC218\uB7C9\uC740 ".concat(PRODUCT_RULES.MIN_STOCK, "\uAC1C \uBBF8\uB9CC\uC774\uAC70\uB098 ").concat(PRODUCT_RULES.MAX_STOCK, "\uAC1C \uCD08\uACFC\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."),
+  NOT_FOUND_PRODUCT_ID: '존재하지 않는 상품 아이디입니다.',
+  BELOW_MIN_CHANGE: '충전 금액은 0원 이하일 수 없습니다.',
+  INVALID_UNIT_CHANGE: "\uCDA9\uC804 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE_RULES.CHANGE_UNIT, "\uC6D0 \uB2E8\uC704\uC774\uC5B4\uC57C \uD569\uB2C8\uB2E4."),
+  EXCEED_MAX_TOTAL_CHANGE: "\uCD5C\uB300 \uBCF4\uC720 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE_RULES.MAX_TOTAL_CHANGE, "\uC6D0\uC744 \uCD08\uACFC\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.")
+};
+var CONFIRM_MESSAGE = '상품을 정말 삭제하시겠습니까?';
 
 /***/ }),
 
