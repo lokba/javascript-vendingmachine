@@ -109,8 +109,11 @@ function createMainElement(template) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "pickNumberInRange": () => (/* binding */ pickNumberInRange),
-/* harmony export */   "generateUniqueId": () => (/* binding */ generateUniqueId)
+/* harmony export */   "generateUniqueId": () => (/* binding */ generateUniqueId),
+/* harmony export */   "deepCopy": () => (/* binding */ deepCopy)
 /* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 function pickNumberInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -131,6 +134,20 @@ function generateUniqueId(list) {
   }
 
   return newId;
+}
+function deepCopy(obj) {
+  var cloneObject = {};
+
+  for (var key in obj) {
+    if (_typeof(obj[key]) === 'object' && obj[key] !== null) {
+      cloneObject[key] = deepCopy(obj[key]);
+      continue;
+    }
+
+    cloneObject[key] = obj[key];
+  }
+
+  return cloneObject;
 }
 
 /***/ }),
@@ -1530,6 +1547,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _RandomStrategy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RandomStrategy */ "./src/js/domain/RandomStrategy.ts");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+
 
 
 class MoneyBox {
@@ -1559,9 +1578,11 @@ class MoneyBox {
         return this._coinStatusList;
     }
     addChange(inputMoney) {
-        const newCoins = this.coinDistributeStrategy.distribute(inputMoney);
-        this._coinStatusList.forEach((coin, index) => {
-            coin.count += newCoins[index].count;
+        const distributedCoinStatusList = this.coinDistributeStrategy.distribute(inputMoney);
+        this._coinStatusList = this._coinStatusList.map((coin, index) => {
+            const cloneCoinObject = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.deepCopy)(coin);
+            cloneCoinObject.count += distributedCoinStatusList[index].count;
+            return cloneCoinObject;
         });
     }
 }
@@ -1596,16 +1617,18 @@ const RandomStrategy = {
             { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_10.VALUE, count: 0 },
         ];
         let moneyLeft = inputMoney;
-        coinStatusList.forEach((coin) => {
-            if (coin.name === 'TEN_WON') {
-                coin.count = moneyLeft / coin.value;
-                return;
+        const distributedCoinStatusList = coinStatusList.map((coin) => {
+            const cloneCoinObject = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.deepCopy)(coin);
+            if (cloneCoinObject.name === 'TEN_WON') {
+                cloneCoinObject.count = moneyLeft / cloneCoinObject.value;
+                return cloneCoinObject;
             }
-            const randomCount = getRandomCoin(moneyLeft, coin.value);
-            moneyLeft -= coin.value * randomCount;
-            coin.count = randomCount;
+            const randomCount = getRandomCoin(moneyLeft, cloneCoinObject.value);
+            moneyLeft -= cloneCoinObject.value * randomCount;
+            cloneCoinObject.count = randomCount;
+            return cloneCoinObject;
         });
-        return coinStatusList;
+        return distributedCoinStatusList;
     },
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RandomStrategy);
