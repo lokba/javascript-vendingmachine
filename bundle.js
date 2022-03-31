@@ -72,7 +72,6 @@ var COIN_10 = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _view_Router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./view/Router */ "./src/js/view/Router.js");
- // eslint-disable-next-line no-new
 
 new _view_Router__WEBPACK_IMPORTED_MODULE_0__["default"]();
 
@@ -1589,7 +1588,6 @@ function getRandomCoin(moneyLeft, value) {
     return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.pickNumberInRange)(0, maxCount);
 }
 const RandomStrategy = {
-    // eslint-disable-next-line max-lines-per-function
     distribute(inputMoney) {
         const coinStatusList = [
             { name: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.NAME, value: _constants__WEBPACK_IMPORTED_MODULE_1__.COIN_500.VALUE, count: 0 },
@@ -1799,7 +1797,7 @@ function isBelowMinCharge({ money }) {
 function inValidUnitChange({ money }) {
     return money % _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE_RULES.CHANGE_UNIT !== 0;
 }
-function isExceedMaxTotalChange({ money, totalChange }) {
+function isExceedMaxTotalChange({ money, totalChange, }) {
     return totalChange + money > _constants__WEBPACK_IMPORTED_MODULE_0__.VENDING_MACHINE_RULES.MAX_TOTAL_CHANGE;
 }
 // validator function
