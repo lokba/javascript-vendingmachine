@@ -269,6 +269,7 @@ var AddChangeTab = /*#__PURE__*/function () {
       }
     });
 
+    //멤버변수 생성
     _classPrivateFieldSet(this, _vendingMachine, machine);
 
     _classPrivateFieldSet(this, _addChangeContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.TEMPLATE.ADD_CHANGE));
@@ -279,7 +280,8 @@ var AddChangeTab = /*#__PURE__*/function () {
 
     _classPrivateFieldSet(this, _totalChange, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#total-change', _classPrivateFieldGet(this, _addChangeContainer)));
 
-    _classPrivateFieldSet(this, _coinStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#coin-status-table', _classPrivateFieldGet(this, _addChangeContainer)));
+    _classPrivateFieldSet(this, _coinStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#coin-status-table', _classPrivateFieldGet(this, _addChangeContainer))); //이벤트 바인딩
+
 
     _classPrivateFieldGet(this, _addChangeForm).addEventListener('submit', _classPrivateFieldGet(this, _handleAddChange));
   }
@@ -467,18 +469,26 @@ var ManageProductTab = /*#__PURE__*/function () {
 
         if (classList.contains('update-product-button')) {
           _classPrivateFieldGet(_this, _handleProductUpdate).call(_this, target);
+
+          return;
         }
 
         if (classList.contains('remove-product-button')) {
           _classPrivateFieldGet(_this, _handleProductRemove).call(_this, target);
+
+          return;
         }
 
         if (classList.contains('confirm-update-button')) {
           _classPrivateFieldGet(_this, _handleProductUpdateConfirm).call(_this, target);
+
+          return;
         }
 
         if (classList.contains('cancel-update-button')) {
           _classPrivateFieldGet(_this, _handleProductUpdateCancel).call(_this, target);
+
+          return;
         }
       }
     });
@@ -573,6 +583,7 @@ var ManageProductTab = /*#__PURE__*/function () {
       }
     });
 
+    //멤버변수 생성
     _classPrivateFieldSet(this, _vendingMachine, machine);
 
     _classPrivateFieldSet(this, _manageContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.MANAGE_PRODUCT));
@@ -585,7 +596,8 @@ var ManageProductTab = /*#__PURE__*/function () {
 
     _classPrivateFieldSet(this, _addProductStockInput, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#add-product-stock-input', _classPrivateFieldGet(this, _manageContainer)));
 
-    _classPrivateFieldSet(this, _productStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#product-status-table', _classPrivateFieldGet(this, _manageContainer)));
+    _classPrivateFieldSet(this, _productStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#product-status-table', _classPrivateFieldGet(this, _manageContainer))); //이벤트 바인딩
+
 
     _classPrivateFieldGet(this, _addProductForm).addEventListener('submit', _classPrivateFieldGet(this, _handleAddProductForm));
 
@@ -799,6 +811,7 @@ var Router = /*#__PURE__*/_createClass(function Router() {
     }
   });
 
+  //멤버변수 생성
   _classPrivateFieldSet(this, _vendingMachine, new _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_0__["default"]());
 
   _classPrivateFieldSet(this, _renderList, {
@@ -809,7 +822,8 @@ var Router = /*#__PURE__*/_createClass(function Router() {
 
   _classPrivateFieldSet(this, _app, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#app'));
 
-  _classPrivateFieldSet(this, _tabMenuNavigation, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#tab-menu-navigation'));
+  _classPrivateFieldSet(this, _tabMenuNavigation, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#tab-menu-navigation')); //이벤트 바인딩
+
 
   window.addEventListener('popstate', _classPrivateFieldGet(this, _render));
   window.addEventListener('DOMContentLoaded', _classPrivateFieldGet(this, _render));
@@ -1565,7 +1579,8 @@ class MoneyBox {
         this.coinDistributeStrategy = strategy;
     }
     get totalChange() {
-        return this._coinStatusList.reduce((totalAmount, { value, count }) => totalAmount + value * count, 0);
+        const totalChange = this._coinStatusList.reduce((totalAmount, { value, count }) => totalAmount + value * count, 0);
+        return totalChange;
     }
     get coinStatus() {
         const totalStatus = {};
@@ -1762,7 +1777,10 @@ class VendingMachineProduct {
                 errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.EXCEED_MAX_PRODUCT_NAME_LENGTH,
             },
             { testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isPriceOutOfRange, errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.OUT_OF_PRODUCT_PRICE_RANGE },
-            { testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isInvalidUnitPrice, errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.INVALID_UNIT_PRODUCT_PRICE },
+            {
+                testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isInvalidUnitPrice,
+                errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.INVALID_UNIT_PRODUCT_PRICE,
+            },
             { testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isStockOutOfRange, errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.OUT_OF_PRODUCT_STOCK_RANGE },
             { testFunc: _validator__WEBPACK_IMPORTED_MODULE_0__.isNotIntegerStock, errorMsg: _constants__WEBPACK_IMPORTED_MODULE_1__.ERROR_MESSAGE.INVALID_PRODUCT_STOCK },
         ];
