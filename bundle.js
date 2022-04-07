@@ -17,7 +17,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "COIN_50": () => (/* binding */ COIN_50),
 /* harmony export */   "COIN_10": () => (/* binding */ COIN_10),
 /* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
-/* harmony export */   "CONFIRM_MESSAGE": () => (/* binding */ CONFIRM_MESSAGE)
+/* harmony export */   "CONFIRM_MESSAGE": () => (/* binding */ CONFIRM_MESSAGE),
+/* harmony export */   "ERROR": () => (/* binding */ ERROR),
+/* harmony export */   "SNACKBAR_MESSAGE": () => (/* binding */ SNACKBAR_MESSAGE),
+/* harmony export */   "SNACKBAR_DELAY_TIME": () => (/* binding */ SNACKBAR_DELAY_TIME),
+/* harmony export */   "STORAGE_KEY": () => (/* binding */ STORAGE_KEY)
 /* harmony export */ });
 var PRODUCT_RULES = {
   MAX_NAME_LENGTH: 10,
@@ -61,6 +65,25 @@ var ERROR_MESSAGE = {
   EXCEED_MAX_TOTAL_CHANGE: "\uCD5C\uB300 \uBCF4\uC720 \uAE08\uC561\uC740 ".concat(VENDING_MACHINE_RULES.MAX_TOTAL_CHANGE, "\uC6D0\uC744 \uCD08\uACFC\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.")
 };
 var CONFIRM_MESSAGE = '상품을 정말 삭제하시겠습니까?';
+var ERROR = 'error';
+var SNACKBAR_MESSAGE = {
+  LOGOUT_SUCCESS: '정상적으로 로그아웃되었습니다.',
+  REGISTER_SUCCESS: '정상적으로 회원가입되었습니다.',
+  LOGIN_SUCCESS: '정상적으로 로그인되었습니다.',
+  MODIFY_MY_INFO_SUCCESS: '내 정보가 정상적으로 수정되었습니다.',
+  ADD_CHANGE_SUCCESS: '잔돈이 정상적으로 충전되었습니다.',
+  RETURN_CHAGNE_SUCCESS: '잔돈이 정상적으로 반환되었습니다.',
+  ADD_PRODUCT_SUCCESS: '상품이 정상적으로 추가되었습니다.',
+  REMOVE_PRODUCT_SUCCESS: '상품이 정상적으로 삭제되었습니다.',
+  MODIFY_PRODUCT_SUCCESS: '상품이 정상적으로 수정되었습니다.',
+  PURCHASE_PRODUCT_SUCCESS: '상품이 정상적으로 구매되었습니다.',
+  INSERT_MONEY_SUCCESS: '금액이 정상적으로 투입되었습니다.'
+};
+var SNACKBAR_DELAY_TIME = 1000;
+var STORAGE_KEY = {
+  USER_ID: 'userId',
+  ACCESS_TOKEN: 'accessToken'
+};
 
 /***/ }),
 
@@ -185,18 +208,853 @@ function deepCopyList(list) {
 
 /***/ }),
 
-/***/ "./src/js/view/AddChangeTab.js":
-/*!*************************************!*\
-  !*** ./src/js/view/AddChangeTab.js ***!
-  \*************************************/
+/***/ "./src/js/view/Router.js":
+/*!*******************************!*\
+  !*** ./src/js/view/Router.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Router)
+/* harmony export */ });
+/* harmony import */ var _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../domain/VendingMachine */ "./src/js/domain/VendingMachine.ts");
+/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../domain/Auth */ "./src/js/domain/Auth.ts");
+/* harmony import */ var _vendingMachine_PurchaseProductTab__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vendingMachine/PurchaseProductTab */ "./src/js/view/vendingMachine/PurchaseProductTab.js");
+/* harmony import */ var _vendingMachine_AddChangeTab__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vendingMachine/AddChangeTab */ "./src/js/view/vendingMachine/AddChangeTab.js");
+/* harmony import */ var _vendingMachine_ManageProductTab__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./vendingMachine/ManageProductTab */ "./src/js/view/vendingMachine/ManageProductTab.js");
+/* harmony import */ var _auth_LoginView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth/LoginView */ "./src/js/view/auth/LoginView.js");
+/* harmony import */ var _auth_RegisterView__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./auth/RegisterView */ "./src/js/view/auth/RegisterView.js");
+/* harmony import */ var _auth_ModifyMyInfoView__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./auth/ModifyMyInfoView */ "./src/js/view/auth/ModifyMyInfoView.js");
+/* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SnackBar */ "./src/js/view/SnackBar.js");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./template */ "./src/js/view/template.js");
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vendingMachine = /*#__PURE__*/new WeakMap();
+
+var _renderList = /*#__PURE__*/new WeakMap();
+
+var _app = /*#__PURE__*/new WeakMap();
+
+var _body = /*#__PURE__*/new WeakMap();
+
+var _tabMenuNavigation = /*#__PURE__*/new WeakMap();
+
+var _adminHeaderContainer = /*#__PURE__*/new WeakMap();
+
+var _main = /*#__PURE__*/new WeakMap();
+
+var _userProfile = /*#__PURE__*/new WeakMap();
+
+var _adminProfile = /*#__PURE__*/new WeakMap();
+
+var _logoutTabMenu = /*#__PURE__*/new WeakMap();
+
+var _nickname = /*#__PURE__*/new WeakMap();
+
+var _render = /*#__PURE__*/new WeakMap();
+
+var _renderAdminHeader = /*#__PURE__*/new WeakSet();
+
+var _renderMain = /*#__PURE__*/new WeakSet();
+
+var _handleProfile = /*#__PURE__*/new WeakSet();
+
+var _handleProfileThumbnail = /*#__PURE__*/new WeakSet();
+
+var _updateCurrentTabMenu = /*#__PURE__*/new WeakSet();
+
+var _handleTabMenuChange = /*#__PURE__*/new WeakMap();
+
+var _handleAdminDetailMenu = /*#__PURE__*/new WeakMap();
+
+var _handleLogout = /*#__PURE__*/new WeakMap();
+
+var _isAdmin = /*#__PURE__*/new WeakSet();
+
+var Router = /*#__PURE__*/_createClass(function Router() {
+  var _this = this;
+
+  _classCallCheck(this, Router);
+
+  _classPrivateMethodInitSpec(this, _isAdmin);
+
+  _classPrivateMethodInitSpec(this, _updateCurrentTabMenu);
+
+  _classPrivateMethodInitSpec(this, _handleProfileThumbnail);
+
+  _classPrivateMethodInitSpec(this, _handleProfile);
+
+  _classPrivateMethodInitSpec(this, _renderMain);
+
+  _classPrivateMethodInitSpec(this, _renderAdminHeader);
+
+  _classPrivateFieldInitSpec(this, _vendingMachine, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _renderList, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _app, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _body, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _tabMenuNavigation, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _adminHeaderContainer, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _main, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _userProfile, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _adminProfile, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _logoutTabMenu, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _nickname, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _render, {
+    writable: true,
+    value: function value() {
+      _classPrivateFieldGet(_this, _app).replaceChildren();
+
+      var path = window.location.hash || '#/manage';
+
+      if (path === '#/register' || path === '#/login' | path === '#/modify') {
+        _classPrivateFieldGet(_this, _app).insertAdjacentElement('beforeend', _classPrivateFieldGet(_this, _renderList)[path].template);
+
+        return;
+      }
+
+      _classPrivateMethodGet(_this, _renderAdminHeader, _renderAdminHeader2).call(_this, path);
+
+      if (!localStorage.getItem(_constants__WEBPACK_IMPORTED_MODULE_11__.STORAGE_KEY.ACCESS_TOKEN)) {
+        path = '#/purchase';
+
+        _classPrivateFieldGet(_this, _tabMenuNavigation).classList.add('hide');
+      }
+
+      _classPrivateMethodGet(_this, _renderMain, _renderMain2).call(_this, path);
+    }
+  });
+
+  _classPrivateFieldInitSpec(this, _handleTabMenuChange, {
+    writable: true,
+    value: function value(e) {
+      e.preventDefault();
+      var newHash = e.target.hash;
+      var previousHash = window.location.hash;
+      if (!Object.keys(_classPrivateFieldGet(_this, _renderList)).includes(newHash) || newHash === previousHash) return;
+      window.history.pushState({}, null, newHash);
+
+      _classPrivateFieldGet(_this, _render).call(_this);
+    }
+  });
+
+  _classPrivateFieldInitSpec(this, _handleAdminDetailMenu, {
+    writable: true,
+    value: function value() {
+      var $adminDetail = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('.admin-detail', _classPrivateFieldGet(_this, _app));
+      $adminDetail.classList.toggle('hide');
+    }
+  });
+
+  _classPrivateFieldInitSpec(this, _handleLogout, {
+    writable: true,
+    value: function value() {
+      localStorage.removeItem(_constants__WEBPACK_IMPORTED_MODULE_11__.STORAGE_KEY.ACCESS_TOKEN);
+      localStorage.removeItem(_constants__WEBPACK_IMPORTED_MODULE_11__.STORAGE_KEY.USER_ID);
+      _SnackBar__WEBPACK_IMPORTED_MODULE_8__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_11__.SNACKBAR_MESSAGE.LOGOUT_SUCCESS);
+    }
+  });
+
+  //멤버변수 생성
+  _classPrivateFieldSet(this, _vendingMachine, new _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_0__["default"]());
+
+  _classPrivateFieldSet(this, _renderList, {
+    '#/manage': new _vendingMachine_ManageProductTab__WEBPACK_IMPORTED_MODULE_4__["default"](_classPrivateFieldGet(this, _vendingMachine)),
+    '#/charge': new _vendingMachine_AddChangeTab__WEBPACK_IMPORTED_MODULE_3__["default"](_classPrivateFieldGet(this, _vendingMachine)),
+    '#/purchase': new _vendingMachine_PurchaseProductTab__WEBPACK_IMPORTED_MODULE_2__["default"](_classPrivateFieldGet(this, _vendingMachine)),
+    '#/login': new _auth_LoginView__WEBPACK_IMPORTED_MODULE_5__["default"](),
+    '#/register': new _auth_RegisterView__WEBPACK_IMPORTED_MODULE_6__["default"](),
+    '#/modify': new _auth_ModifyMyInfoView__WEBPACK_IMPORTED_MODULE_7__["default"]()
+  });
+
+  _classPrivateFieldSet(this, _adminHeaderContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.createDivElement)(_template__WEBPACK_IMPORTED_MODULE_9__.TEMPLATE.ADMIN_HEADER));
+
+  _classPrivateFieldSet(this, _body, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('body'));
+
+  _classPrivateFieldSet(this, _app, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('#app'));
+
+  _classPrivateFieldSet(this, _main, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('main', _classPrivateFieldGet(this, _adminHeaderContainer)));
+
+  _classPrivateFieldSet(this, _tabMenuNavigation, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('#tab-menu-navigation', _classPrivateFieldGet(this, _adminHeaderContainer)));
+
+  _classPrivateFieldSet(this, _userProfile, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('#user', _classPrivateFieldGet(this, _adminHeaderContainer)));
+
+  _classPrivateFieldSet(this, _adminProfile, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('#admin', _classPrivateFieldGet(this, _adminHeaderContainer)));
+
+  _classPrivateFieldSet(this, _logoutTabMenu, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('#logout-tab-menu', _classPrivateFieldGet(this, _adminHeaderContainer)));
+
+  _classPrivateFieldSet(this, _nickname, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('#nickname', _classPrivateFieldGet(this, _adminHeaderContainer))); //이벤트 바인딩
+
+
+  window.addEventListener('popstate', _classPrivateFieldGet(this, _render));
+  window.addEventListener('DOMContentLoaded', _classPrivateFieldGet(this, _render));
+
+  _classPrivateFieldGet(this, _adminProfile).addEventListener('click', _classPrivateFieldGet(this, _handleAdminDetailMenu));
+
+  _classPrivateFieldGet(this, _tabMenuNavigation).addEventListener('click', _classPrivateFieldGet(this, _handleTabMenuChange));
+
+  _classPrivateFieldGet(this, _logoutTabMenu).addEventListener('click', _classPrivateFieldGet(this, _handleLogout)); //초기 화면 렌더링
+
+
+  _classPrivateFieldGet(this, _body).insertAdjacentHTML('beforeend', _template__WEBPACK_IMPORTED_MODULE_9__.TEMPLATE.SNACK_BAR);
+});
+
+function _renderAdminHeader2(path) {
+  _classPrivateFieldGet(this, _app).insertAdjacentElement('beforeend', _classPrivateFieldGet(this, _adminHeaderContainer));
+
+  _classPrivateFieldGet(this, _tabMenuNavigation).classList.remove('hide');
+
+  _classPrivateMethodGet(this, _updateCurrentTabMenu, _updateCurrentTabMenu2).call(this, path);
+
+  _classPrivateMethodGet(this, _handleProfile, _handleProfile2).call(this);
+}
+
+function _renderMain2(path) {
+  _classPrivateFieldGet(this, _main).replaceChildren();
+
+  if (!_classPrivateFieldGet(this, _renderList)[path]) {
+    var notFoundContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_9__.TEMPLATE.NOT_FOUND);
+
+    _classPrivateFieldGet(this, _main).insertAdjacentElement('beforeend', notFoundContainer);
+
+    return;
+  }
+
+  _classPrivateFieldGet(this, _main).insertAdjacentElement('beforeend', _classPrivateFieldGet(this, _renderList)[path].tabElements);
+}
+
+function _handleProfile2() {
+  _classPrivateFieldGet(this, _userProfile).classList.toggle('hide', _classPrivateMethodGet(this, _isAdmin, _isAdmin2).call(this));
+
+  _classPrivateFieldGet(this, _adminProfile).classList.toggle('hide', !_classPrivateMethodGet(this, _isAdmin, _isAdmin2).call(this));
+
+  _classPrivateMethodGet(this, _handleProfileThumbnail, _handleProfileThumbnail2).call(this);
+}
+
+function _handleProfileThumbnail2() {
+  var _this2 = this;
+
+  if (_classPrivateMethodGet(this, _isAdmin, _isAdmin2).call(this)) {
+    var id = localStorage.getItem(_constants__WEBPACK_IMPORTED_MODULE_11__.STORAGE_KEY.USER_ID);
+    _domain_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].getUserInfo(id).then(function (_ref) {
+      var name = _ref.name;
+      _classPrivateFieldGet(_this2, _nickname).textContent = name[0];
+    });
+  }
+}
+
+function _updateCurrentTabMenu2(path) {
+  var previousMenuButton = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)('.current', _classPrivateFieldGet(this, _tabMenuNavigation));
+  previousMenuButton === null || previousMenuButton === void 0 ? void 0 : previousMenuButton.classList.remove('current');
+  var currentMenuButton = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_10__.selectDom)("[href=\"".concat(path, "\"]"), _classPrivateFieldGet(this, _tabMenuNavigation));
+  currentMenuButton === null || currentMenuButton === void 0 ? void 0 : currentMenuButton.classList.add('current');
+}
+
+function _isAdmin2() {
+  return localStorage.getItem('accessToken');
+}
+
+
+
+/***/ }),
+
+/***/ "./src/js/view/SnackBar.js":
+/*!*********************************!*\
+  !*** ./src/js/view/SnackBar.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
+
+
+var SnackBar = {
+  dispatch: function dispatch(message) {
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+    var snackbar = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#snackbar');
+    snackbar.textContent = message;
+    snackbar.classList.toggle('error', type === 'error');
+    snackbar.classList.toggle('show');
+    setTimeout(function () {
+      snackbar.classList.toggle('show');
+    }, _constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_DELAY_TIME);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SnackBar);
+
+/***/ }),
+
+/***/ "./src/js/view/auth/LoginView.js":
+/*!***************************************!*\
+  !*** ./src/js/view/auth/LoginView.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LoginView)
+/* harmony export */ });
+/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../domain/Auth */ "./src/js/domain/Auth.ts");
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
+/* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
+
+
+
+
+
+var _loginContainer = /*#__PURE__*/new WeakMap();
+
+var _loginForm = /*#__PURE__*/new WeakMap();
+
+var _userEmail = /*#__PURE__*/new WeakMap();
+
+var _userPassword = /*#__PURE__*/new WeakMap();
+
+var _handleLogin = /*#__PURE__*/new WeakMap();
+
+var LoginView = /*#__PURE__*/function () {
+  function LoginView() {
+    var _this = this;
+
+    _classCallCheck(this, LoginView);
+
+    _classPrivateFieldInitSpec(this, _loginContainer, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _loginForm, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _userEmail, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _userPassword, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _handleLogin, {
+      writable: true,
+      value: function value(e) {
+        e.preventDefault();
+
+        var email = _classPrivateFieldGet(_this, _userEmail).value;
+
+        var password = _classPrivateFieldGet(_this, _userPassword).value;
+
+        _domain_Auth__WEBPACK_IMPORTED_MODULE_0__["default"].login({
+          email: email,
+          password: password
+        });
+        _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_4__.SNACKBAR_MESSAGE.LOGIN_SUCCESS);
+      }
+    });
+
+    //멤버변수 생성
+    _classPrivateFieldSet(this, _loginContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createDivElement)(_template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.LOGIN));
+
+    _classPrivateFieldSet(this, _loginForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#login-form', _classPrivateFieldGet(this, _loginContainer)));
+
+    _classPrivateFieldSet(this, _userEmail, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#user-email', _classPrivateFieldGet(this, _loginContainer)));
+
+    _classPrivateFieldSet(this, _userPassword, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#user-password', _classPrivateFieldGet(this, _loginContainer))); //이벤트 바인딩
+
+
+    _classPrivateFieldGet(this, _loginForm).addEventListener('submit', _classPrivateFieldGet(this, _handleLogin));
+  }
+
+  _createClass(LoginView, [{
+    key: "template",
+    get: function get() {
+      return _classPrivateFieldGet(this, _loginContainer);
+    }
+  }]);
+
+  return LoginView;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/view/auth/ModifyMyInfoView.js":
+/*!**********************************************!*\
+  !*** ./src/js/view/auth/ModifyMyInfoView.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ModifyMyInfoView)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domain/Auth */ "./src/js/domain/Auth.ts");
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
+/* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
+
+
+
+
+
+var _modifyContainer = /*#__PURE__*/new WeakMap();
+
+var _modifyForm = /*#__PURE__*/new WeakMap();
+
+var _email = /*#__PURE__*/new WeakMap();
+
+var _name = /*#__PURE__*/new WeakMap();
+
+var _password = /*#__PURE__*/new WeakMap();
+
+var _passwordConfirm = /*#__PURE__*/new WeakMap();
+
+var ModifyMyInfoView = /*#__PURE__*/function () {
+  function ModifyMyInfoView() {
+    var _this = this;
+
+    _classCallCheck(this, ModifyMyInfoView);
+
+    _classPrivateFieldInitSpec(this, _modifyContainer, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _modifyForm, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _email, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _name, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _password, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _passwordConfirm, {
+      writable: true,
+      value: void 0
+    });
+
+    _defineProperty(this, "handleModify", function (e) {
+      e.preventDefault();
+      var id = localStorage.getItem(_constants__WEBPACK_IMPORTED_MODULE_0__.STORAGE_KEY.USER_ID);
+
+      var email = _classPrivateFieldGet(_this, _email).value;
+
+      var name = _classPrivateFieldGet(_this, _name).value;
+
+      var password = _classPrivateFieldGet(_this, _password).value;
+
+      var passwordConfirm = _classPrivateFieldGet(_this, _passwordConfirm).value;
+
+      try {
+        _domain_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].modify(id, {
+          email: email,
+          name: name,
+          password: password,
+          passwordConfirm: passwordConfirm
+        });
+        _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_MESSAGE.MODIFY_MY_INFO_SUCCESS);
+      } catch (error) {
+        _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(error, _constants__WEBPACK_IMPORTED_MODULE_0__.ERROR);
+      }
+    });
+
+    //멤버변수 생성
+    _classPrivateFieldSet(this, _modifyContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createDivElement)(_template__WEBPACK_IMPORTED_MODULE_4__.TEMPLATE.MODIFY));
+
+    _classPrivateFieldSet(this, _modifyForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#register-form', _classPrivateFieldGet(this, _modifyContainer)));
+
+    _classPrivateFieldSet(this, _email, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#email', _classPrivateFieldGet(this, _modifyContainer)));
+
+    _classPrivateFieldSet(this, _name, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#name', _classPrivateFieldGet(this, _modifyContainer)));
+
+    _classPrivateFieldSet(this, _password, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#password', _classPrivateFieldGet(this, _modifyContainer)));
+
+    _classPrivateFieldSet(this, _passwordConfirm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#password-confirm', _classPrivateFieldGet(this, _modifyContainer))); //이벤트 등록
+
+
+    _classPrivateFieldGet(this, _modifyForm).addEventListener('submit', this.handleModify);
+  }
+
+  _createClass(ModifyMyInfoView, [{
+    key: "template",
+    get: function get() {
+      var _this2 = this;
+
+      var id = localStorage.getItem(_constants__WEBPACK_IMPORTED_MODULE_0__.STORAGE_KEY.USER_ID);
+      _domain_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].getUserInfo(id).then(function (_ref) {
+        var name = _ref.name,
+            email = _ref.email;
+        _classPrivateFieldGet(_this2, _email).value = email;
+        _classPrivateFieldGet(_this2, _name).value = name;
+      });
+      return _classPrivateFieldGet(this, _modifyContainer);
+    }
+  }]);
+
+  return ModifyMyInfoView;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/view/auth/RegisterView.js":
+/*!******************************************!*\
+  !*** ./src/js/view/auth/RegisterView.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ RegisterView)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domain/Auth */ "./src/js/domain/Auth.ts");
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
+/* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
+
+
+
+
+
+var _registerContainer = /*#__PURE__*/new WeakMap();
+
+var _registerForm = /*#__PURE__*/new WeakMap();
+
+var _email = /*#__PURE__*/new WeakMap();
+
+var _name = /*#__PURE__*/new WeakMap();
+
+var _password = /*#__PURE__*/new WeakMap();
+
+var _passwordConfirm = /*#__PURE__*/new WeakMap();
+
+var _handleRegister = /*#__PURE__*/new WeakMap();
+
+var RegisterView = /*#__PURE__*/function () {
+  function RegisterView() {
+    var _this = this;
+
+    _classCallCheck(this, RegisterView);
+
+    _classPrivateFieldInitSpec(this, _registerContainer, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _registerForm, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _email, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _name, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _password, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _passwordConfirm, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _handleRegister, {
+      writable: true,
+      value: function value(e) {
+        e.preventDefault();
+
+        var email = _classPrivateFieldGet(_this, _email).value;
+
+        var name = _classPrivateFieldGet(_this, _name).value;
+
+        var password = _classPrivateFieldGet(_this, _password).value;
+
+        var passwordConfirm = _classPrivateFieldGet(_this, _passwordConfirm).value;
+
+        try {
+          _domain_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].register({
+            email: email,
+            name: name,
+            password: password,
+            passwordConfirm: passwordConfirm
+          });
+          _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_MESSAGE.REGISTER_SUCCESS);
+        } catch (error) {
+          _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(error, _constants__WEBPACK_IMPORTED_MODULE_0__.ERROR);
+        }
+      }
+    });
+
+    //멤버변수 생성
+    _classPrivateFieldSet(this, _registerContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createDivElement)(_template__WEBPACK_IMPORTED_MODULE_4__.TEMPLATE.REGISTER));
+
+    _classPrivateFieldSet(this, _registerForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#register-form', _classPrivateFieldGet(this, _registerContainer)));
+
+    _classPrivateFieldSet(this, _email, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#email', _classPrivateFieldGet(this, _registerContainer)));
+
+    _classPrivateFieldSet(this, _name, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#name', _classPrivateFieldGet(this, _registerContainer)));
+
+    _classPrivateFieldSet(this, _password, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#password', _classPrivateFieldGet(this, _registerContainer)));
+
+    _classPrivateFieldSet(this, _passwordConfirm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.selectDom)('#password-confirm', _classPrivateFieldGet(this, _registerContainer))); //이벤트 등록
+
+
+    _classPrivateFieldGet(this, _registerForm).addEventListener('submit', _classPrivateFieldGet(this, _handleRegister));
+  }
+
+  _createClass(RegisterView, [{
+    key: "template",
+    get: function get() {
+      return _classPrivateFieldGet(this, _registerContainer);
+    }
+  }]);
+
+  return RegisterView;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/view/template.js":
+/*!*********************************!*\
+  !*** ./src/js/view/template.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TEMPLATE": () => (/* binding */ TEMPLATE)
+/* harmony export */ });
+var TEMPLATE = {
+  MANAGE_PRODUCT: "\n    <section title=\"\uC0C1\uD488 \uC815\uBCF4\">\n      <form id=\"add-product-form\">\n        <fieldset>\n          <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n          <input type=\"text\" id=\"add-product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n          <input type=\"number\" id=\"add-product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n          <input type=\"number\" id=\"add-product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n          <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n        </fieldset>\n      </form>\n    </section>\n    <section class=\"table-section\" title=\"\uC0C1\uD488 \uD604\uD669\">\n      <table id=\"product-status-table\" class=\"product-table\">\n        <caption>\n          \uC0C1\uD488 \uD604\uD669\n        </caption>\n        <tr>\n          <th>\uC0C1\uD488\uBA85</th>\n          <th>\uAC00\uACA9</th>\n          <th>\uC218\uB7C9</th>\n          <th>\uAD00\uB9AC</th>\n        </tr>\n      </table>\n    </section>\n  ",
+  PRODUCT_TABLE_ROW: function PRODUCT_TABLE_ROW(_ref) {
+    var name = _ref.name,
+        price = _ref.price,
+        stock = _ref.stock,
+        id = _ref.id;
+    return "\n    <tr>\n      <td class=\"product-name\">".concat(name, "</td>\n      <td class=\"product-price\">").concat(price, "</td>\n      <td class=\"product-stock\" data-product-id=").concat(id, ">").concat(stock, "</td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"update-product-button\" data-product-id=").concat(id, ">\uC218\uC815</button>\n          <button type=\"button\" class=\"remove-product-button\" data-product-id=").concat(id, ">\uC0AD\uC81C</button>\n        </div>\n      </td>\n    </tr>\n  ");
+  },
+  UPDATE_PRODUCT_TABLE_ROW: function UPDATE_PRODUCT_TABLE_ROW(_ref2) {
+    var name = _ref2.name,
+        price = _ref2.price,
+        stock = _ref2.stock,
+        id = _ref2.id;
+    return "\n    <tr>\n      <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n      <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n      <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n          \uD655\uC778\n          </button>\n          <button type=\"button\" class=\"cancel-update-button\" data-product-id=").concat(id, ">\n          \uCDE8\uC18C\n          </button>\n        </div>\n      </td>\n    </tr>\n  ");
+  },
+  ADD_CHANGE: "\n    <section title=\"\uC794\uB3C8 \uCDA9\uC804\">\n      <form id=\"add-change-form\">\n        <label for=\"change-input\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n        <div>\n          <input type=\"number\" id=\"change-input\" placeholder=\"\uAE08\uC561\" />\n          <button type=\"submit\" class=\"submit-button\">\uCDA9\uC804</button>\n        </div>\n      </form>\n      <p>\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-change\">0</span>\uC6D0</p>\n    </section>\n    <section class=\"table-section\" title=\"\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\">\n      <table id=\"coin-status-table\" class=\"coin-table\">\n        <caption>\n          \uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\n        </caption>\n        <tr>\n          <th>\uB3D9\uC804</th>\n          <th>\uAC1C\uC218</th>\n        </tr>\n        <tr>\n          <td>500\uC6D0</td>\n          <td data-coin-name='FIVE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>100\uC6D0</td>\n          <td data-coin-name='ONE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>50\uC6D0</td>\n          <td data-coin-name='FIFTY_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>10\uC6D0</td>\n          <td data-coin-name='TEN_WON'>0\uAC1C</td>\n        </tr>\n      </table>\n    </section>\n  ",
+  PURCHASE: "\n    <section title=\"\uAD6C\uB9E4 \uAE08\uC561 \uD22C\uC785\">\n      <form id=\"insert-money-form\">\n        <label for=\"insert-money-input\">\uC0C1\uD488\uC744 \uAD6C\uB9E4\uD560 \uAE08\uC561\uC744 \uD22C\uC785\uD574\uC8FC\uC138\uC694</label>\n        <div>\n          <input type=\"number\" id=\"insert-money-input\" placeholder=\"\uAE08\uC561\" />\n          <button type=\"submit\" class=\"submit-button\">\uD22C\uC785</button>\n        </div>\n      </form>\n      <p>\uD22C\uC785\uD55C \uAE08\uC561: <span id=\"total-insert-money\">0</span>\uC6D0</p>\n    </section>\n    <section class=\"table-section\" title=\"\uAD6C\uB9E4 \uAC00\uB2A5 \uC0C1\uD488 \uD604\uD669\">\n      <table id=\"purchaseable-product-status-table\" class=\"product-table\" >\n        <caption>\n          \uAD6C\uB9E4 \uAC00\uB2A5 \uC0C1\uD488 \uD604\uD669\n        </caption>\n        <tbody id=\"purchaseable-product-status-tbody\">\n        </tbody>\n      </table>\n    </section>\n    <section class=\"table-section\" title=\"\uC794\uB3C8 \uBC18\uD658\">\n      <table id=\"return-coin-status-table\" class=\"coin-table\">\n        <caption>\n          \uC794\uB3C8 \uBC18\uD658\n        </caption>\n        <tr>\n          <th>\uB3D9\uC804</th>\n          <th>\uAC1C\uC218</th>\n        </tr>\n        <tr>\n          <td>500\uC6D0</td>\n          <td data-coin-name='FIVE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>100\uC6D0</td>\n          <td data-coin-name='ONE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>50\uC6D0</td>\n          <td data-coin-name='FIFTY_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>10\uC6D0</td>\n          <td data-coin-name='TEN_WON'>0\uAC1C</td>\n        </tr>\n      </table>\n      <button type=\"button\" id=\"return-change-button\">\uBC18\uD658</button>\n    </section>",
+  PURCHASEABLE_PRODUCT_TABLE_BODY: "\n    <tr>\n      <th>\uC0C1\uD488\uBA85</th>\n      <th>\uAC00\uACA9</th>\n      <th>\uC218\uB7C9</th>\n      <th>\uAD00\uB9AC</th>\n    </tr>\n  ",
+  PURCHASEABLE_PRODUCT_TABLE_ROW: function PURCHASEABLE_PRODUCT_TABLE_ROW(_ref3) {
+    var name = _ref3.name,
+        price = _ref3.price,
+        stock = _ref3.stock,
+        id = _ref3.id;
+    return "\n    <tr>\n      <td class=\"product-name\">".concat(name, "</td>\n      <td class=\"product-price\">").concat(price, "</td>\n      <td class=\"product-stock\">").concat(stock, "</td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"purchase-product-button\" data-product-id=").concat(id, ">\uAD6C\uB9E4</button>\n        </div>\n      </td>\n    </tr>\n  ");
+  },
+  NOT_FOUND: "\n    <section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n      <h2>\uD83D\uDED2 Page Not Found</h2>\n      <a href=\"#/manage\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n    </section>\n  ",
+  LOGIN: "\n  <header>\n    <h1 id=\"app-title\">\uB85C\uADF8\uC778</h1>\n  </header>\n  <main>\n    <section title=\"\uB85C\uADF8\uC778\">\n      <form id=\"login-form\">\n        <fieldset>\n          <legend hidden>\uB85C\uADF8\uC778</legend>\n          <label for=\"user-email\">\uC774\uBA54\uC77C</label>\n          <input\n            type=\"email\"\n            id=\"user-email\"\n            placeholder=\"woowacourse@gmail.com\"\n            required\n          />\n          <label for=\"user-password\">\uBE44\uBC00\uBC88\uD638</label>\n          <input\n            type=\"password\"\n            id=\"user-password\"\n            placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n            required\n          />\n          <button type=\"submit\" class=\"submit-button\">\uD655\uC778</button>\n        </fieldset>\n        <p>\uC544\uC9C1 \uD68C\uC6D0\uC774 \uC544\uB2C8\uC2E0\uAC00\uC694? <a href=\"#/register\">\uD68C\uC6D0\uAC00\uC785</a></p>\n      </form>\n    </section>\n  </main>\n  ",
+  REGISTER: "\n    <header>\n      <h1 id=\"app-title\">\uD68C\uC6D0\uAC00\uC785</h1>\n    </header>\n    <main>\n      <section title=\"\uD68C\uC6D0\uAC00\uC785\">\n        <form id=\"register-form\">\n          <fieldset>\n            <legend hidden>\uD68C\uC6D0\uAC00\uC785</legend>\n            <label for=\"email\">\uC774\uBA54\uC77C</label>\n            <input\n                type=\"email\"\n                id=\"email\"\n                placeholder=\"\uC774\uBA54\uC77C \uC8FC\uC18C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"name\">\uC774\uB984</label>\n            <input\n                type=\"text\"\n                id=\"name\"\n                placeholder=\"\uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n            <input\n                type=\"password\"\n                id=\"password\"\n                placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n            <input\n                type=\"password\"\n                id=\"password-confirm\"\n                placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <button type=\"submit\" class=\"submit-button\">\uD655\uC778</button>\n          </fieldset>\n        </form>\n      </section>\n    </main>\n  ",
+  MODIFY: "\n    <header>\n      <h1 id=\"app-title\">\uB0B4 \uC815\uBCF4 \uC218\uC815</h1>\n    </header>\n    <main>\n      <section title=\"\uD68C\uC6D0\uAC00\uC785\">\n        <form id=\"register-form\">\n          <fieldset>\n            <legend hidden>\uD68C\uC6D0\uAC00\uC785</legend>\n            <label for=\"email\">\uC774\uBA54\uC77C</label>\n            <input\n                type=\"email\"\n                id=\"email\"\n                placeholder=\"\uC774\uBA54\uC77C \uC8FC\uC18C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"name\">\uC774\uB984</label>\n            <input\n                type=\"text\"\n                id=\"name\"\n                placeholder=\"\uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n            <input\n                type=\"password\"\n                id=\"password\"\n                placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n            <input\n                type=\"password\"\n                id=\"password-confirm\"\n                placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <button type=\"submit\" class=\"submit-button\">\uD655\uC778</button>\n          </fieldset>\n        </form>\n      </section>\n    </main>\n  ",
+  ADMIN_HEADER: "\n    <header>\n      <h1 id=\"app-title\">\uD83C\uDF7F \uC790\uD310\uAE30 \uD83C\uDF7F</h1>\n      <nav id=\"tab-menu-navigation\">\n        <a id=\"manage-tab-menu\" class=\"tab-menu-button\" href=\"#/manage\">\uC0C1\uD488 \uAD00\uB9AC</a>\n        <a id=\"charge-tab-menu\" class=\"tab-menu-button\" href=\"#/charge\">\uC794\uB3C8 \uCDA9\uC804</a>\n        <a id=\"purchase-tab-menu\" class=\"tab-menu-button\" href=\"#/purchase\">\n          \uC0C1\uD488 \uAD6C\uB9E4\n        </a>\n      </nav>\n      <div class=\"profile\">\n        <div id=\"user\">\n          <a class=\"tab-menu-button\" href=\"#/login\">\uB85C\uADF8\uC778</a>\n        </div>\n        <div id=\"admin\">\n          <p id=\"nickname\"></p>\n          <div class=\"admin-detail hide\">\n            <a id=\"modify-tab-menu\" class=\"tab-menu-button\" href=\"#/modify\">\uB0B4 \uC815\uBCF4 \uC218\uC815</a>\n            <a id=\"logout-tab-menu\" class=\"tab-menu-button\" href=\"#/purchase\">\uB85C\uADF8\uC544\uC6C3</a>\n          </div>\n        </div>\n      </div>\n    </header>\n    <main></main>\n  ",
+  SNACK_BAR: "\n    <div id=\"snackbar\">\uC774\uACF3\uC5D0 \uBA54\uC2DC\uC9C0\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</div>\n  "
+};
+
+/***/ }),
+
+/***/ "./src/js/view/vendingMachine/AddChangeTab.js":
+/*!****************************************************!*\
+  !*** ./src/js/view/vendingMachine/AddChangeTab.js ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ AddChangeTab)
 /* harmony export */ });
-/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./template */ "./src/js/view/template.js");
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
+/* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -220,6 +1078,8 @@ function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _
 function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
 
 function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+
 
 
 
@@ -295,9 +1155,11 @@ var AddChangeTab = /*#__PURE__*/function () {
           _classPrivateMethodGet(_this, _renderCoinStatus, _renderCoinStatus2).call(_this);
 
           _classPrivateMethodGet(_this, _resetInput, _resetInput2).call(_this);
+
+          _SnackBar__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_3__.SNACKBAR_MESSAGE.ADD_CHANGE_SUCCESS);
         } catch (_ref) {
           var message = _ref.message;
-          alert(message);
+          _SnackBar__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(message, _constants__WEBPACK_IMPORTED_MODULE_3__.ERROR);
         }
       }
     });
@@ -353,133 +1215,20 @@ function _resetInput2() {
 
 /***/ }),
 
-/***/ "./src/js/view/LoginView.js":
-/*!**********************************!*\
-  !*** ./src/js/view/LoginView.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ LoginView)
-/* harmony export */ });
-/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../domain/Auth */ "./src/js/domain/Auth.ts");
-/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./template */ "./src/js/view/template.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
-
-function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
-
-function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
-
-function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
-
-function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
-
-function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
-
-function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
-
-
-
-
-
-var _loginContainer = /*#__PURE__*/new WeakMap();
-
-var _loginForm = /*#__PURE__*/new WeakMap();
-
-var _userEmail = /*#__PURE__*/new WeakMap();
-
-var _userPassword = /*#__PURE__*/new WeakMap();
-
-var _handleLogin = /*#__PURE__*/new WeakMap();
-
-var LoginView = /*#__PURE__*/function () {
-  function LoginView() {
-    var _this = this;
-
-    _classCallCheck(this, LoginView);
-
-    _classPrivateFieldInitSpec(this, _loginContainer, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _loginForm, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _userEmail, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _userPassword, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _handleLogin, {
-      writable: true,
-      value: function value(e) {
-        e.preventDefault();
-
-        var email = _classPrivateFieldGet(_this, _userEmail).value;
-
-        var password = _classPrivateFieldGet(_this, _userPassword).value;
-
-        _domain_Auth__WEBPACK_IMPORTED_MODULE_0__["default"].login({
-          email: email,
-          password: password
-        });
-      }
-    });
-
-    _classPrivateFieldSet(this, _loginContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createDivElement)(_template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.LOGIN));
-
-    _classPrivateFieldSet(this, _loginForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#login-form', _classPrivateFieldGet(this, _loginContainer)));
-
-    _classPrivateFieldSet(this, _userEmail, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#user-email', _classPrivateFieldGet(this, _loginContainer)));
-
-    _classPrivateFieldSet(this, _userPassword, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#user-password', _classPrivateFieldGet(this, _loginContainer)));
-
-    _classPrivateFieldGet(this, _loginForm).addEventListener('submit', _classPrivateFieldGet(this, _handleLogin));
-  }
-
-  _createClass(LoginView, [{
-    key: "template",
-    get: function get() {
-      return _classPrivateFieldGet(this, _loginContainer);
-    }
-  }]);
-
-  return LoginView;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/js/view/ManageProductTab.js":
-/*!*****************************************!*\
-  !*** ./src/js/view/ManageProductTab.js ***!
-  \*****************************************/
+/***/ "./src/js/view/vendingMachine/ManageProductTab.js":
+/*!********************************************************!*\
+  !*** ./src/js/view/vendingMachine/ManageProductTab.js ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ManageProductTab)
 /* harmony export */ });
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
-/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./template */ "./src/js/view/template.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
+/* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -503,6 +1252,7 @@ function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _
 function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
 
 function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
 
 
 
@@ -609,9 +1359,11 @@ var ManageProductTab = /*#__PURE__*/function () {
           }));
 
           _classPrivateMethodGet(_this, _resetInput, _resetInput2).call(_this);
+
+          _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_MESSAGE.ADD_PRODUCT_SUCCESS);
         } catch (_ref) {
           var message = _ref.message;
-          alert(message);
+          _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(message, _constants__WEBPACK_IMPORTED_MODULE_0__.ERROR);
         }
       }
     });
@@ -679,9 +1431,10 @@ var ManageProductTab = /*#__PURE__*/function () {
             _classPrivateFieldGet(_this, _vendingMachine).removeProduct(id);
 
             target.closest('tr').remove();
+            _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_MESSAGE.REMOVE_PRODUCT_SUCCESS);
           } catch (_ref3) {
             var message = _ref3.message;
-            alert(message);
+            _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(message, _constants__WEBPACK_IMPORTED_MODULE_0__.ERROR);
           }
         }
       }
@@ -710,9 +1463,10 @@ var ManageProductTab = /*#__PURE__*/function () {
             id: id
           }));
           targetTableRow.remove();
+          _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_MESSAGE.MODIFY_PRODUCT_SUCCESS);
         } catch (_ref4) {
           var message = _ref4.message;
-          alert(message);
+          _SnackBar__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(message, _constants__WEBPACK_IMPORTED_MODULE_0__.ERROR);
         }
       }
     });
@@ -778,8 +1532,8 @@ function _renderStockStatus2() {
   for (var _i = 0, _Object$keys = Object.keys(productList); _i < _Object$keys.length; _i++) {
     var id = _Object$keys[_i];
     var stock = productList[id].stock;
-    var element = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)(".product-stock[data-product-id=\"".concat(id, "\"]"), _classPrivateFieldGet(this, _manageContainer));
-    element.textContent = stock;
+    var productStock = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)(".product-stock[data-product-id=\"".concat(id, "\"]"), _classPrivateFieldGet(this, _manageContainer));
+    productStock.textContent = stock;
   }
 }
 
@@ -795,167 +1549,20 @@ function _resetInput2() {
 
 /***/ }),
 
-/***/ "./src/js/view/ModifyMyInfoView.js":
-/*!*****************************************!*\
-  !*** ./src/js/view/ModifyMyInfoView.js ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ModifyMyInfoView)
-/* harmony export */ });
-/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../domain/Auth */ "./src/js/domain/Auth.ts");
-/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./template */ "./src/js/view/template.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
-
-function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
-
-function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
-
-function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
-
-function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
-
-function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
-
-function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
-
-
-
-
-
-var _modifyContainer = /*#__PURE__*/new WeakMap();
-
-var _modifyForm = /*#__PURE__*/new WeakMap();
-
-var _email = /*#__PURE__*/new WeakMap();
-
-var _name = /*#__PURE__*/new WeakMap();
-
-var _password = /*#__PURE__*/new WeakMap();
-
-var _passwordConfirm = /*#__PURE__*/new WeakMap();
-
-var ModifyMyInfoView = /*#__PURE__*/function () {
-  function ModifyMyInfoView() {
-    var _this = this;
-
-    _classCallCheck(this, ModifyMyInfoView);
-
-    _classPrivateFieldInitSpec(this, _modifyContainer, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _modifyForm, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _email, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _name, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _password, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _passwordConfirm, {
-      writable: true,
-      value: void 0
-    });
-
-    _defineProperty(this, "handleModify", function (e) {
-      e.preventDefault();
-      var id = localStorage.getItem('userId');
-
-      var email = _classPrivateFieldGet(_this, _email).value;
-
-      var name = _classPrivateFieldGet(_this, _name).value;
-
-      var password = _classPrivateFieldGet(_this, _password).value;
-
-      var passwordConfirm = _classPrivateFieldGet(_this, _passwordConfirm).value;
-
-      try {
-        _domain_Auth__WEBPACK_IMPORTED_MODULE_0__["default"].modify(id, {
-          email: email,
-          name: name,
-          password: password,
-          passwordConfirm: passwordConfirm
-        });
-      } catch (error) {
-        alert(error);
-      }
-    });
-
-    _classPrivateFieldSet(this, _modifyContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createDivElement)(_template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.MODIFY));
-
-    _classPrivateFieldSet(this, _modifyForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#register-form', _classPrivateFieldGet(this, _modifyContainer)));
-
-    _classPrivateFieldSet(this, _email, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#email', _classPrivateFieldGet(this, _modifyContainer)));
-
-    _classPrivateFieldSet(this, _name, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#name', _classPrivateFieldGet(this, _modifyContainer)));
-
-    _classPrivateFieldSet(this, _password, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#password', _classPrivateFieldGet(this, _modifyContainer)));
-
-    _classPrivateFieldSet(this, _passwordConfirm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#password-confirm', _classPrivateFieldGet(this, _modifyContainer)));
-
-    _classPrivateFieldGet(this, _modifyForm).addEventListener('submit', this.handleModify);
-  }
-
-  _createClass(ModifyMyInfoView, [{
-    key: "template",
-    get: function get() {
-      var _this2 = this;
-
-      var id = localStorage.getItem('userId');
-      _domain_Auth__WEBPACK_IMPORTED_MODULE_0__["default"].getUserInfo(id).then(function (_ref) {
-        var name = _ref.name,
-            email = _ref.email;
-        _classPrivateFieldGet(_this2, _email).value = email;
-        _classPrivateFieldGet(_this2, _name).value = name;
-      });
-      return _classPrivateFieldGet(this, _modifyContainer);
-    }
-  }]);
-
-  return ModifyMyInfoView;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/js/view/PurchaseProductTab.js":
-/*!*******************************************!*\
-  !*** ./src/js/view/PurchaseProductTab.js ***!
-  \*******************************************/
+/***/ "./src/js/view/vendingMachine/PurchaseProductTab.js":
+/*!**********************************************************!*\
+  !*** ./src/js/view/vendingMachine/PurchaseProductTab.js ***!
+  \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ PurchaseProductTab)
 /* harmony export */ });
-/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./template */ "./src/js/view/template.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
+/* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
+/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -983,6 +1590,8 @@ function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.
 
 
 
+
+
 var _vendingMachine = /*#__PURE__*/new WeakMap();
 
 var _purchaseContainer = /*#__PURE__*/new WeakMap();
@@ -999,9 +1608,9 @@ var _returnChangeButton = /*#__PURE__*/new WeakMap();
 
 var _returnCoinStatusTable = /*#__PURE__*/new WeakMap();
 
-var _handleReturnChange = /*#__PURE__*/new WeakMap();
-
 var _renderPurchaseableProductList = /*#__PURE__*/new WeakSet();
+
+var _handleReturnChange = /*#__PURE__*/new WeakMap();
 
 var _handleInsertMoney = /*#__PURE__*/new WeakMap();
 
@@ -1073,6 +1682,7 @@ var PurchaseProductTab = /*#__PURE__*/function () {
           element.textContent = "".concat(returnCoinStatus[element.dataset.coinName], "\uAC1C");
         });
         _classPrivateFieldGet(_this, _totalInsertMoney).textContent = _classPrivateFieldGet(_this, _vendingMachine).totalInsertMoney;
+        _SnackBar__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_MESSAGE.RETURN_CHAGNE_SUCCESS);
       }
     });
 
@@ -1089,9 +1699,11 @@ var PurchaseProductTab = /*#__PURE__*/function () {
           _classPrivateFieldGet(_this, _totalInsertMoney).textContent = _classPrivateFieldGet(_this, _vendingMachine).totalInsertMoney;
 
           _classPrivateMethodGet(_this, _resetInput, _resetInput2).call(_this);
+
+          _SnackBar__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_MESSAGE.INSERT_MONEY_SUCCESS);
         } catch (_ref) {
           var message = _ref.message;
-          alert(message);
+          _SnackBar__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(message, _constants__WEBPACK_IMPORTED_MODULE_0__.ERROR);
         }
       }
     });
@@ -1103,16 +1715,17 @@ var PurchaseProductTab = /*#__PURE__*/function () {
         if (!target.classList.contains('purchase-product-button')) return;
         var parent = target.closest('tr');
         var productId = target.dataset.productId;
+        var productStock = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('.product-stock', parent);
 
         try {
           _classPrivateFieldGet(_this, _vendingMachine).purchaseProduct(productId);
 
           _classPrivateFieldGet(_this, _totalInsertMoney).textContent = _classPrivateFieldGet(_this, _vendingMachine).totalInsertMoney;
-          var stock = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('.product-stock', parent);
-          stock.textContent = stock.textContent - 1;
+          productStock.textContent = productStock.textContent - 1;
+          _SnackBar__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(_constants__WEBPACK_IMPORTED_MODULE_0__.SNACKBAR_MESSAGE.PURCHASE_PRODUCT_SUCCESS);
         } catch (_ref3) {
           var message = _ref3.message;
-          alert(message);
+          _SnackBar__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch(message, _constants__WEBPACK_IMPORTED_MODULE_0__.ERROR);
         }
       }
     });
@@ -1120,19 +1733,19 @@ var PurchaseProductTab = /*#__PURE__*/function () {
     //멤버변수 생성
     _classPrivateFieldSet(this, _vendingMachine, machine);
 
-    _classPrivateFieldSet(this, _purchaseContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_1__.TEMPLATE.PURCHASE));
+    _classPrivateFieldSet(this, _purchaseContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_3__.TEMPLATE.PURCHASE));
 
-    _classPrivateFieldSet(this, _insertMoneyForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#insert-money-form', _classPrivateFieldGet(this, _purchaseContainer)));
+    _classPrivateFieldSet(this, _insertMoneyForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#insert-money-form', _classPrivateFieldGet(this, _purchaseContainer)));
 
-    _classPrivateFieldSet(this, _insertMoneyInput, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#insert-money-input', _classPrivateFieldGet(this, _purchaseContainer)));
+    _classPrivateFieldSet(this, _insertMoneyInput, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#insert-money-input', _classPrivateFieldGet(this, _purchaseContainer)));
 
-    _classPrivateFieldSet(this, _totalInsertMoney, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#total-insert-money', _classPrivateFieldGet(this, _purchaseContainer)));
+    _classPrivateFieldSet(this, _totalInsertMoney, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#total-insert-money', _classPrivateFieldGet(this, _purchaseContainer)));
 
-    _classPrivateFieldSet(this, _purchaseableProductStatusTbody, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#purchaseable-product-status-tbody', _classPrivateFieldGet(this, _purchaseContainer)));
+    _classPrivateFieldSet(this, _purchaseableProductStatusTbody, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#purchaseable-product-status-tbody', _classPrivateFieldGet(this, _purchaseContainer)));
 
-    _classPrivateFieldSet(this, _returnChangeButton, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#return-change-button', _classPrivateFieldGet(this, _purchaseContainer)));
+    _classPrivateFieldSet(this, _returnChangeButton, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#return-change-button', _classPrivateFieldGet(this, _purchaseContainer)));
 
-    _classPrivateFieldSet(this, _returnCoinStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__.selectDom)('#return-coin-status-table', _classPrivateFieldGet(this, _purchaseContainer))); //이벤트 바인딩
+    _classPrivateFieldSet(this, _returnCoinStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#return-coin-status-table', _classPrivateFieldGet(this, _purchaseContainer))); //이벤트 바인딩
 
 
     _classPrivateFieldGet(this, _insertMoneyForm).addEventListener('submit', _classPrivateFieldGet(this, _handleInsertMoney));
@@ -1155,10 +1768,10 @@ var PurchaseProductTab = /*#__PURE__*/function () {
 }();
 
 function _renderPurchaseableProductList2() {
+  var productTableBody = _template__WEBPACK_IMPORTED_MODULE_3__.TEMPLATE.PURCHASEABLE_PRODUCT_TABLE_BODY;
+
   var _classPrivateFieldGet3 = _classPrivateFieldGet(this, _vendingMachine),
       productList = _classPrivateFieldGet3.productList;
-
-  var productTableBody = _template__WEBPACK_IMPORTED_MODULE_1__.TEMPLATE.PURCHASEABLE_PRODUCT_TABLE_BODY;
 
   for (var _i = 0, _Object$keys = Object.keys(productList); _i < _Object$keys.length; _i++) {
     var id = _Object$keys[_i];
@@ -1166,12 +1779,13 @@ function _renderPurchaseableProductList2() {
         name = _productList$id.name,
         price = _productList$id.price,
         stock = _productList$id.stock;
-    productTableBody += _template__WEBPACK_IMPORTED_MODULE_1__.TEMPLATE.PURCHASEABLE_PRODUCT_TABLE_ROW({
+    var data = {
       name: name,
       price: price,
       stock: stock,
       id: id
-    });
+    };
+    productTableBody += _template__WEBPACK_IMPORTED_MODULE_3__.TEMPLATE.PURCHASEABLE_PRODUCT_TABLE_ROW(data);
   }
 
   _classPrivateFieldGet(this, _purchaseableProductStatusTbody).replaceChildren();
@@ -1184,470 +1798,6 @@ function _resetInput2() {
 }
 
 
-
-/***/ }),
-
-/***/ "./src/js/view/RegisterView.js":
-/*!*************************************!*\
-  !*** ./src/js/view/RegisterView.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ RegisterView)
-/* harmony export */ });
-/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../domain/Auth */ "./src/js/domain/Auth.ts");
-/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./template */ "./src/js/view/template.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
-
-function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
-
-function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
-
-function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
-
-function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
-
-function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
-
-function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
-
-
-
-
-
-var _registerContainer = /*#__PURE__*/new WeakMap();
-
-var _registerForm = /*#__PURE__*/new WeakMap();
-
-var _email = /*#__PURE__*/new WeakMap();
-
-var _name = /*#__PURE__*/new WeakMap();
-
-var _password = /*#__PURE__*/new WeakMap();
-
-var _passwordConfirm = /*#__PURE__*/new WeakMap();
-
-var _handleRegister = /*#__PURE__*/new WeakMap();
-
-var RegisterView = /*#__PURE__*/function () {
-  function RegisterView() {
-    var _this = this;
-
-    _classCallCheck(this, RegisterView);
-
-    _classPrivateFieldInitSpec(this, _registerContainer, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _registerForm, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _email, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _name, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _password, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _passwordConfirm, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _handleRegister, {
-      writable: true,
-      value: function value(e) {
-        e.preventDefault();
-
-        var email = _classPrivateFieldGet(_this, _email).value;
-
-        var name = _classPrivateFieldGet(_this, _name).value;
-
-        var password = _classPrivateFieldGet(_this, _password).value;
-
-        var passwordConfirm = _classPrivateFieldGet(_this, _passwordConfirm).value;
-
-        _domain_Auth__WEBPACK_IMPORTED_MODULE_0__["default"].register({
-          email: email,
-          name: name,
-          password: password,
-          passwordConfirm: passwordConfirm
-        });
-      }
-    });
-
-    _classPrivateFieldSet(this, _registerContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.createDivElement)(_template__WEBPACK_IMPORTED_MODULE_2__.TEMPLATE.REGISTER));
-
-    _classPrivateFieldSet(this, _registerForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#register-form', _classPrivateFieldGet(this, _registerContainer)));
-
-    _classPrivateFieldSet(this, _email, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#email', _classPrivateFieldGet(this, _registerContainer)));
-
-    _classPrivateFieldSet(this, _name, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#name', _classPrivateFieldGet(this, _registerContainer)));
-
-    _classPrivateFieldSet(this, _password, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#password', _classPrivateFieldGet(this, _registerContainer)));
-
-    _classPrivateFieldSet(this, _passwordConfirm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_1__.selectDom)('#password-confirm', _classPrivateFieldGet(this, _registerContainer)));
-
-    _classPrivateFieldGet(this, _registerForm).addEventListener('submit', _classPrivateFieldGet(this, _handleRegister));
-  }
-
-  _createClass(RegisterView, [{
-    key: "template",
-    get: function get() {
-      return _classPrivateFieldGet(this, _registerContainer);
-    }
-  }]);
-
-  return RegisterView;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/js/view/Router.js":
-/*!*******************************!*\
-  !*** ./src/js/view/Router.js ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Router)
-/* harmony export */ });
-/* harmony import */ var _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../domain/VendingMachine */ "./src/js/domain/VendingMachine.ts");
-/* harmony import */ var _PurchaseProductTab__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PurchaseProductTab */ "./src/js/view/PurchaseProductTab.js");
-/* harmony import */ var _AddChangeTab__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddChangeTab */ "./src/js/view/AddChangeTab.js");
-/* harmony import */ var _ManageProductTab__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ManageProductTab */ "./src/js/view/ManageProductTab.js");
-/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/dom */ "./src/js/utils/dom.js");
-/* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./template */ "./src/js/view/template.js");
-/* harmony import */ var _LoginView__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./LoginView */ "./src/js/view/LoginView.js");
-/* harmony import */ var _RegisterView__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RegisterView */ "./src/js/view/RegisterView.js");
-/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../domain/Auth */ "./src/js/domain/Auth.ts");
-/* harmony import */ var _ModifyMyInfoView__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ModifyMyInfoView */ "./src/js/view/ModifyMyInfoView.js");
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
-
-function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
-
-function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
-
-function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
-
-function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
-
-function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
-
-function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
-
-function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
-
-function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
-
-
-
-
-
-
-
-
-
-
-
-
-var _vendingMachine = /*#__PURE__*/new WeakMap();
-
-var _renderList = /*#__PURE__*/new WeakMap();
-
-var _app = /*#__PURE__*/new WeakMap();
-
-var _tabMenuNavigation = /*#__PURE__*/new WeakMap();
-
-var _adminHeaderContainer = /*#__PURE__*/new WeakMap();
-
-var _main = /*#__PURE__*/new WeakMap();
-
-var _userProfile = /*#__PURE__*/new WeakMap();
-
-var _adminProfile = /*#__PURE__*/new WeakMap();
-
-var _logoutTabMenu = /*#__PURE__*/new WeakMap();
-
-var _nickname = /*#__PURE__*/new WeakMap();
-
-var _render = /*#__PURE__*/new WeakMap();
-
-var _updateCurrentTabMenu = /*#__PURE__*/new WeakSet();
-
-var _handleTabMenuChange = /*#__PURE__*/new WeakMap();
-
-var _handleAdminDetailMenu = /*#__PURE__*/new WeakMap();
-
-var _handleLogout = /*#__PURE__*/new WeakMap();
-
-var _isAdmin = /*#__PURE__*/new WeakSet();
-
-var Router = /*#__PURE__*/_createClass(function Router() {
-  var _this = this;
-
-  _classCallCheck(this, Router);
-
-  _classPrivateMethodInitSpec(this, _isAdmin);
-
-  _classPrivateMethodInitSpec(this, _updateCurrentTabMenu);
-
-  _classPrivateFieldInitSpec(this, _vendingMachine, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _renderList, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _app, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _tabMenuNavigation, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _adminHeaderContainer, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _main, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _userProfile, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _adminProfile, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _logoutTabMenu, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _nickname, {
-    writable: true,
-    value: void 0
-  });
-
-  _classPrivateFieldInitSpec(this, _render, {
-    writable: true,
-    value: function value() {
-      _classPrivateFieldGet(_this, _app).replaceChildren();
-
-      if (window.location.hash === '#/register' || window.location.hash === '#/login' | window.location.hash === '#/modify') {
-        _classPrivateFieldGet(_this, _app).insertAdjacentElement('beforeend', _classPrivateFieldGet(_this, _renderList)[window.location.hash].template);
-
-        return;
-      }
-
-      _classPrivateFieldGet(_this, _app).insertAdjacentElement('beforeend', _classPrivateFieldGet(_this, _adminHeaderContainer));
-
-      if (_classPrivateMethodGet(_this, _isAdmin, _isAdmin2).call(_this)) {
-        var id = localStorage.getItem('userId');
-        _domain_Auth__WEBPACK_IMPORTED_MODULE_8__["default"].getUserInfo(id).then(function (_ref) {
-          var name = _ref.name;
-          _classPrivateFieldGet(_this, _nickname).textContent = name[0];
-        });
-      }
-
-      _classPrivateFieldGet(_this, _userProfile).classList.toggle('hide', _classPrivateMethodGet(_this, _isAdmin, _isAdmin2).call(_this));
-
-      _classPrivateFieldGet(_this, _adminProfile).classList.toggle('hide', !_classPrivateMethodGet(_this, _isAdmin, _isAdmin2).call(_this));
-
-      var path = window.location.hash || '#/manage';
-
-      _classPrivateFieldGet(_this, _tabMenuNavigation).classList.remove('hide');
-
-      _classPrivateMethodGet(_this, _updateCurrentTabMenu, _updateCurrentTabMenu2).call(_this, path);
-
-      if (!localStorage.getItem('accessToken')) {
-        path = '#/purchase';
-
-        _classPrivateFieldGet(_this, _tabMenuNavigation).classList.add('hide');
-      }
-
-      _classPrivateFieldGet(_this, _main).replaceChildren();
-
-      if (!_classPrivateFieldGet(_this, _renderList)[path]) {
-        var notFoundContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createMainElement)(_template__WEBPACK_IMPORTED_MODULE_5__.TEMPLATE.NOT_FOUND);
-
-        _classPrivateFieldGet(_this, _main).insertAdjacentElement('beforeend', notFoundContainer);
-
-        return;
-      }
-
-      _classPrivateFieldGet(_this, _main).insertAdjacentElement('beforeend', _classPrivateFieldGet(_this, _renderList)[path].tabElements);
-    }
-  });
-
-  _classPrivateFieldInitSpec(this, _handleTabMenuChange, {
-    writable: true,
-    value: function value(e) {
-      e.preventDefault();
-      var newHash = e.target.hash;
-      var previousHash = window.location.hash;
-      if (!Object.keys(_classPrivateFieldGet(_this, _renderList)).includes(newHash) || newHash === previousHash) return;
-      window.history.pushState({}, null, newHash);
-
-      _classPrivateFieldGet(_this, _render).call(_this);
-    }
-  });
-
-  _classPrivateFieldInitSpec(this, _handleAdminDetailMenu, {
-    writable: true,
-    value: function value() {
-      var $adminDetail = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('.admin-detail', _classPrivateFieldGet(_this, _app));
-      $adminDetail.classList.toggle('hide');
-    }
-  });
-
-  _classPrivateFieldInitSpec(this, _handleLogout, {
-    writable: true,
-    value: function value() {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('userId');
-    }
-  });
-
-  //멤버변수 생성
-  _classPrivateFieldSet(this, _vendingMachine, new _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_0__["default"]());
-
-  _classPrivateFieldSet(this, _renderList, {
-    '#/manage': new _ManageProductTab__WEBPACK_IMPORTED_MODULE_3__["default"](_classPrivateFieldGet(this, _vendingMachine)),
-    '#/charge': new _AddChangeTab__WEBPACK_IMPORTED_MODULE_2__["default"](_classPrivateFieldGet(this, _vendingMachine)),
-    '#/purchase': new _PurchaseProductTab__WEBPACK_IMPORTED_MODULE_1__["default"](_classPrivateFieldGet(this, _vendingMachine)),
-    '#/login': new _LoginView__WEBPACK_IMPORTED_MODULE_6__["default"](),
-    '#/register': new _RegisterView__WEBPACK_IMPORTED_MODULE_7__["default"](),
-    '#/modify': new _ModifyMyInfoView__WEBPACK_IMPORTED_MODULE_9__["default"]()
-  });
-
-  _classPrivateFieldSet(this, _adminHeaderContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createDivElement)(_template__WEBPACK_IMPORTED_MODULE_5__.TEMPLATE.ADMIN_HEADER));
-
-  _classPrivateFieldSet(this, _app, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#app'));
-
-  _classPrivateFieldSet(this, _main, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('main', _classPrivateFieldGet(this, _adminHeaderContainer)));
-
-  _classPrivateFieldSet(this, _tabMenuNavigation, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#tab-menu-navigation', _classPrivateFieldGet(this, _adminHeaderContainer)));
-
-  _classPrivateFieldSet(this, _userProfile, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#user', _classPrivateFieldGet(this, _adminHeaderContainer)));
-
-  _classPrivateFieldSet(this, _adminProfile, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#admin', _classPrivateFieldGet(this, _adminHeaderContainer)));
-
-  _classPrivateFieldSet(this, _logoutTabMenu, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#logout-tab-menu', _classPrivateFieldGet(this, _adminHeaderContainer)));
-
-  _classPrivateFieldSet(this, _nickname, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('#nickname', _classPrivateFieldGet(this, _adminHeaderContainer))); //이벤트 바인딩
-
-
-  window.addEventListener('popstate', _classPrivateFieldGet(this, _render));
-  window.addEventListener('DOMContentLoaded', _classPrivateFieldGet(this, _render));
-
-  _classPrivateFieldGet(this, _adminProfile).addEventListener('click', _classPrivateFieldGet(this, _handleAdminDetailMenu));
-
-  _classPrivateFieldGet(this, _tabMenuNavigation).addEventListener('click', _classPrivateFieldGet(this, _handleTabMenuChange));
-
-  _classPrivateFieldGet(this, _logoutTabMenu).addEventListener('click', _classPrivateFieldGet(this, _handleLogout));
-} //리팩토링 필수
-);
-
-function _updateCurrentTabMenu2(path) {
-  var previousMenuButton = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)('.current', _classPrivateFieldGet(this, _tabMenuNavigation));
-  previousMenuButton === null || previousMenuButton === void 0 ? void 0 : previousMenuButton.classList.remove('current');
-  var currentMenuButton = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.selectDom)("[href=\"".concat(path, "\"]"), _classPrivateFieldGet(this, _tabMenuNavigation));
-  currentMenuButton === null || currentMenuButton === void 0 ? void 0 : currentMenuButton.classList.add('current');
-}
-
-function _isAdmin2() {
-  return localStorage.getItem('accessToken');
-}
-
-
-
-/***/ }),
-
-/***/ "./src/js/view/template.js":
-/*!*********************************!*\
-  !*** ./src/js/view/template.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TEMPLATE": () => (/* binding */ TEMPLATE)
-/* harmony export */ });
-var TEMPLATE = {
-  MANAGE_PRODUCT: "\n    <section title=\"\uC0C1\uD488 \uC815\uBCF4\">\n      <form id=\"add-product-form\">\n        <fieldset>\n          <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n          <input type=\"text\" id=\"add-product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n          <input type=\"number\" id=\"add-product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n          <input type=\"number\" id=\"add-product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n          <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n        </fieldset>\n      </form>\n    </section>\n    <section class=\"table-section\" title=\"\uC0C1\uD488 \uD604\uD669\">\n      <table id=\"product-status-table\" class=\"product-table\">\n        <caption>\n          \uC0C1\uD488 \uD604\uD669\n        </caption>\n        <tr>\n          <th>\uC0C1\uD488\uBA85</th>\n          <th>\uAC00\uACA9</th>\n          <th>\uC218\uB7C9</th>\n          <th>\uAD00\uB9AC</th>\n        </tr>\n      </table>\n    </section>\n  ",
-  ADD_CHANGE: "\n    <section title=\"\uC794\uB3C8 \uCDA9\uC804\">\n      <form id=\"add-change-form\">\n        <label for=\"change-input\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n        <div>\n          <input type=\"number\" id=\"change-input\" placeholder=\"\uAE08\uC561\" />\n          <button type=\"submit\" class=\"submit-button\">\uCDA9\uC804</button>\n        </div>\n      </form>\n      <p>\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-change\">0</span>\uC6D0</p>\n    </section>\n    <section class=\"table-section\" title=\"\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\">\n      <table id=\"coin-status-table\" class=\"coin-table\">\n        <caption>\n          \uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\n        </caption>\n        <tr>\n          <th>\uB3D9\uC804</th>\n          <th>\uAC1C\uC218</th>\n        </tr>\n        <tr>\n          <td>500\uC6D0</td>\n          <td data-coin-name='FIVE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>100\uC6D0</td>\n          <td data-coin-name='ONE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>50\uC6D0</td>\n          <td data-coin-name='FIFTY_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>10\uC6D0</td>\n          <td data-coin-name='TEN_WON'>0\uAC1C</td>\n        </tr>\n      </table>\n    </section>\n  ",
-  PRODUCT_TABLE_ROW: function PRODUCT_TABLE_ROW(_ref) {
-    var name = _ref.name,
-        price = _ref.price,
-        stock = _ref.stock,
-        id = _ref.id;
-    return "\n    <tr>\n      <td class=\"product-name\">".concat(name, "</td>\n      <td class=\"product-price\">").concat(price, "</td>\n      <td class=\"product-stock\" data-product-id=").concat(id, ">").concat(stock, "</td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"update-product-button\" data-product-id=").concat(id, ">\uC218\uC815</button>\n          <button type=\"button\" class=\"remove-product-button\" data-product-id=").concat(id, ">\uC0AD\uC81C</button>\n        </div>\n      </td>\n    </tr>\n  ");
-  },
-  UPDATE_PRODUCT_TABLE_ROW: function UPDATE_PRODUCT_TABLE_ROW(_ref2) {
-    var name = _ref2.name,
-        price = _ref2.price,
-        stock = _ref2.stock,
-        id = _ref2.id;
-    return "\n    <tr>\n      <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n      <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n      <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n          \uD655\uC778\n          </button>\n          <button type=\"button\" class=\"cancel-update-button\" data-product-id=").concat(id, ">\n          \uCDE8\uC18C\n          </button>\n        </div>\n      </td>\n    </tr>\n  ");
-  },
-  PURCHASE: "\n    <section title=\"\uAD6C\uB9E4 \uAE08\uC561 \uD22C\uC785\">\n      <form id=\"insert-money-form\">\n        <label for=\"insert-money-input\">\uC0C1\uD488\uC744 \uAD6C\uB9E4\uD560 \uAE08\uC561\uC744 \uD22C\uC785\uD574\uC8FC\uC138\uC694</label>\n        <div>\n          <input type=\"number\" id=\"insert-money-input\" placeholder=\"\uAE08\uC561\" />\n          <button type=\"submit\" class=\"submit-button\">\uD22C\uC785</button>\n        </div>\n      </form>\n      <p>\uD22C\uC785\uD55C \uAE08\uC561: <span id=\"total-insert-money\">0</span>\uC6D0</p>\n    </section>\n    <section class=\"table-section\" title=\"\uAD6C\uB9E4 \uAC00\uB2A5 \uC0C1\uD488 \uD604\uD669\">\n      <table id=\"purchaseable-product-status-table\" class=\"product-table\" >\n        <caption>\n          \uAD6C\uB9E4 \uAC00\uB2A5 \uC0C1\uD488 \uD604\uD669\n        </caption>\n        <tbody id=\"purchaseable-product-status-tbody\">\n        </tbody>\n      </table>\n    </section>\n    <section class=\"table-section\" title=\"\uC794\uB3C8 \uBC18\uD658\">\n      <table id=\"return-coin-status-table\" class=\"coin-table\">\n        <caption>\n          \uC794\uB3C8 \uBC18\uD658\n        </caption>\n        <tr>\n          <th>\uB3D9\uC804</th>\n          <th>\uAC1C\uC218</th>\n        </tr>\n        <tr>\n          <td>500\uC6D0</td>\n          <td data-coin-name='FIVE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>100\uC6D0</td>\n          <td data-coin-name='ONE_HUNDRED_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>50\uC6D0</td>\n          <td data-coin-name='FIFTY_WON'>0\uAC1C</td>\n        </tr>\n        <tr>\n          <td>10\uC6D0</td>\n          <td data-coin-name='TEN_WON'>0\uAC1C</td>\n        </tr>\n      </table>\n      <button type=\"button\" id=\"return-change-button\">\uBC18\uD658</button>\n    </section>",
-  PURCHASEABLE_PRODUCT_TABLE_BODY: "\n    <tr>\n      <th>\uC0C1\uD488\uBA85</th>\n      <th>\uAC00\uACA9</th>\n      <th>\uC218\uB7C9</th>\n      <th>\uAD00\uB9AC</th>\n    </tr>\n  ",
-  PURCHASEABLE_PRODUCT_TABLE_ROW: function PURCHASEABLE_PRODUCT_TABLE_ROW(_ref3) {
-    var name = _ref3.name,
-        price = _ref3.price,
-        stock = _ref3.stock,
-        id = _ref3.id;
-    return "\n    <tr>\n      <td class=\"product-name\">".concat(name, "</td>\n      <td class=\"product-price\">").concat(price, "</td>\n      <td class=\"product-stock\">").concat(stock, "</td>\n      <td>\n        <div class=\"table-button-wrapper\">\n          <button type=\"button\" class=\"purchase-product-button\" data-product-id=").concat(id, ">\uAD6C\uB9E4</button>\n        </div>\n      </td>\n    </tr>\n  ");
-  },
-  NOT_FOUND: "\n    <section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n      <h2>\uD83D\uDED2 Page Not Found</h2>\n      <a href=\"#/manage\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n    </section>\n  ",
-  LOGIN: "\n  <header>\n    <h1 id=\"app-title\">\uB85C\uADF8\uC778</h1>\n  </header>\n  <main>\n    <section title=\"\uB85C\uADF8\uC778\">\n      <form id=\"login-form\">\n        <fieldset>\n          <legend hidden>\uB85C\uADF8\uC778</legend>\n          <label for=\"user-email\">\uC774\uBA54\uC77C</label>\n          <input\n            type=\"email\"\n            id=\"user-email\"\n            placeholder=\"woowacourse@gmail.com\"\n            required\n          />\n          <label for=\"user-password\">\uBE44\uBC00\uBC88\uD638</label>\n          <input\n            type=\"password\"\n            id=\"user-password\"\n            placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n            required\n          />\n          <button type=\"submit\" class=\"submit-button\">\uD655\uC778</button>\n        </fieldset>\n        <p>\uC544\uC9C1 \uD68C\uC6D0\uC774 \uC544\uB2C8\uC2E0\uAC00\uC694? <a href=\"#/register\">\uD68C\uC6D0\uAC00\uC785</a></p>\n      </form>\n    </section>\n  </main>\n  ",
-  REGISTER: "\n    <header>\n      <h1 id=\"app-title\">\uD68C\uC6D0\uAC00\uC785</h1>\n    </header>\n    <main>\n      <section title=\"\uD68C\uC6D0\uAC00\uC785\">\n        <form id=\"register-form\">\n          <fieldset>\n            <legend hidden>\uD68C\uC6D0\uAC00\uC785</legend>\n            <label for=\"email\">\uC774\uBA54\uC77C</label>\n            <input\n                type=\"email\"\n                id=\"email\"\n                placeholder=\"\uC774\uBA54\uC77C \uC8FC\uC18C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"name\">\uC774\uB984</label>\n            <input\n                type=\"text\"\n                id=\"name\"\n                placeholder=\"\uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n            <input\n                type=\"password\"\n                id=\"password\"\n                placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n            <input\n                type=\"password\"\n                id=\"password-confirm\"\n                placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <button type=\"submit\" class=\"submit-button\">\uD655\uC778</button>\n          </fieldset>\n        </form>\n      </section>\n    </main>\n  ",
-  MODIFY: "\n    <header>\n      <h1 id=\"app-title\">\uB0B4 \uC815\uBCF4 \uC218\uC815</h1>\n    </header>\n    <main>\n      <section title=\"\uD68C\uC6D0\uAC00\uC785\">\n        <form id=\"register-form\">\n          <fieldset>\n            <legend hidden>\uD68C\uC6D0\uAC00\uC785</legend>\n            <label for=\"email\">\uC774\uBA54\uC77C</label>\n            <input\n                type=\"email\"\n                id=\"email\"\n                placeholder=\"\uC774\uBA54\uC77C \uC8FC\uC18C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"name\">\uC774\uB984</label>\n            <input\n                type=\"text\"\n                id=\"name\"\n                placeholder=\"\uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n            <input\n                type=\"password\"\n                id=\"password\"\n                placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n            <input\n                type=\"password\"\n                id=\"password-confirm\"\n                placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n                required\n              />\n            <button type=\"submit\" class=\"submit-button\">\uD655\uC778</button>\n          </fieldset>\n        </form>\n      </section>\n    </main>\n  ",
-  ADMIN_HEADER: "\n    <header>\n      <h1 id=\"app-title\">\uD83C\uDF7F \uC790\uD310\uAE30 \uD83C\uDF7F</h1>\n      <nav id=\"tab-menu-navigation\">\n        <a id=\"manage-tab-menu\" class=\"tab-menu-button\" href=\"#/manage\"> \uC0C1\uD488 \uAD00\uB9AC </a>\n        <a id=\"charge-tab-menu\" class=\"tab-menu-button\" href=\"#/charge\"> \uC794\uB3C8 \uCDA9\uC804 </a>\n        <a id=\"purchase-tab-menu\" class=\"tab-menu-button\" href=\"#/purchase\">\n          \uC0C1\uD488 \uAD6C\uB9E4\n        </a>\n      </nav>\n      <div class=\"profile\">\n        <div id=\"user\">\n          <a class=\"tab-menu-button\" href=\"#/login\">\uB85C\uADF8\uC778</a>\n        </div>\n        <div id=\"admin\">\n          <p id=\"nickname\">\uC6B0</p>\n          <div class=\"admin-detail hide\">\n            <a id=\"modify-tab-menu\" class=\"tab-menu-button\" href=\"#/modify\">\uB0B4 \uC815\uBCF4 \uC218\uC815</a>\n            <a id=\"logout-tab-menu\" class=\"tab-menu-button\" href=\"#/purchase\">\uB85C\uADF8\uC544\uC6C3</a>\n          </div>\n        </div>\n      </div>\n    </header>\n    <main></main>\n  "
-};
 
 /***/ }),
 
@@ -1723,7 +1873,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./nav.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/nav.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_table_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./table.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/table.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_variables_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./variables.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/variables.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_snackbar_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./snackbar.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/snackbar.css");
 // Imports
+
 
 
 
@@ -1737,6 +1889,7 @@ ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_form_css__WEBPACK
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_4__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_table_css__WEBPACK_IMPORTED_MODULE_5__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_variables_css__WEBPACK_IMPORTED_MODULE_6__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_snackbar_css__WEBPACK_IMPORTED_MODULE_7__["default"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n", "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
 // Exports
@@ -1765,6 +1918,32 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "header {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 32px;\n}\n\n#app-title {\n  font-size: 34px;\n  font-weight: 600;\n}\n\nnav {\n  display: flex;\n  gap: 10px;\n}\n\nnav.hide {\n  display: none;\n}\n\n.tab-menu-button {\n  width: 120px;\n\n  padding: 8px 0;\n\n  background-color: var(--tab-menu-button-bg-color);\n  border: none;\n  border-radius: 4px;\n\n  font-size: 1rem;\n  text-align: center;\n  text-decoration: none;\n  cursor: pointer;\n}\n\n.tab-menu-button.current {\n  background-color: var(--tab-menu-button-stress-bg-color);\n  cursor: default;\n}\n\n.tab-menu-button:hover {\n  background-color: var(--tab-menu-button-stress-bg-color);\n}\n\n.tab-menu-button:visited {\n  color: var(--default--black-color);\n}\n\n.profile #user {\n  display: flex;\n  position: absolute;\n  right: 11px;\n  top: 12px;\n}\n\n#user.hide {\n  display: none;\n}\n\n.profile #admin {\n  width: 40px;\n  height: 40px;\n\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  position: absolute;\n  right: 11px;\n  top: 12px;\n\n  background: #d6f4f8;\n  border-radius: 50%;\n\n  font-size: 20px;\n  cursor: pointer;\n}\n\n#admin.hide {\n  display: none;\n}\n\n.admin-detail {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n\n  position: absolute;\n\n  top: 40px;\n  right: 0;\n}\n\n.admin-detail.hide {\n  display: none;\n}\n\n.admin-detail a {\n  width: 90px;\n\n  font-size: 15px;\n  color: black;\n}\n", "",{"version":3,"sources":["webpack://./src/css/nav.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,aAAa;EACb,SAAS;AACX;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,YAAY;;EAEZ,cAAc;;EAEd,iDAAiD;EACjD,YAAY;EACZ,kBAAkB;;EAElB,eAAe;EACf,kBAAkB;EAClB,qBAAqB;EACrB,eAAe;AACjB;;AAEA;EACE,wDAAwD;EACxD,eAAe;AACjB;;AAEA;EACE,wDAAwD;AAC1D;;AAEA;EACE,kCAAkC;AACpC;;AAEA;EACE,aAAa;EACb,kBAAkB;EAClB,WAAW;EACX,SAAS;AACX;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,WAAW;EACX,YAAY;;EAEZ,aAAa;EACb,uBAAuB;EACvB,mBAAmB;;EAEnB,kBAAkB;EAClB,WAAW;EACX,SAAS;;EAET,mBAAmB;EACnB,kBAAkB;;EAElB,eAAe;EACf,eAAe;AACjB;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;;EAEnB,kBAAkB;;EAElB,SAAS;EACT,QAAQ;AACV;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,WAAW;;EAEX,eAAe;EACf,YAAY;AACd","sourcesContent":["header {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 32px;\n}\n\n#app-title {\n  font-size: 34px;\n  font-weight: 600;\n}\n\nnav {\n  display: flex;\n  gap: 10px;\n}\n\nnav.hide {\n  display: none;\n}\n\n.tab-menu-button {\n  width: 120px;\n\n  padding: 8px 0;\n\n  background-color: var(--tab-menu-button-bg-color);\n  border: none;\n  border-radius: 4px;\n\n  font-size: 1rem;\n  text-align: center;\n  text-decoration: none;\n  cursor: pointer;\n}\n\n.tab-menu-button.current {\n  background-color: var(--tab-menu-button-stress-bg-color);\n  cursor: default;\n}\n\n.tab-menu-button:hover {\n  background-color: var(--tab-menu-button-stress-bg-color);\n}\n\n.tab-menu-button:visited {\n  color: var(--default--black-color);\n}\n\n.profile #user {\n  display: flex;\n  position: absolute;\n  right: 11px;\n  top: 12px;\n}\n\n#user.hide {\n  display: none;\n}\n\n.profile #admin {\n  width: 40px;\n  height: 40px;\n\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  position: absolute;\n  right: 11px;\n  top: 12px;\n\n  background: #d6f4f8;\n  border-radius: 50%;\n\n  font-size: 20px;\n  cursor: pointer;\n}\n\n#admin.hide {\n  display: none;\n}\n\n.admin-detail {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n\n  position: absolute;\n\n  top: 40px;\n  right: 0;\n}\n\n.admin-detail.hide {\n  display: none;\n}\n\n.admin-detail a {\n  width: 90px;\n\n  font-size: 15px;\n  color: black;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/css/snackbar.css":
+/*!********************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/css/snackbar.css ***!
+  \********************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "#snackbar {\n  min-width: 250px;\n\n  visibility: hidden;\n  margin-left: -125px;\n\n  background-color: #333;\n\n  background-color: #37b24d;\n  color: #fff;\n  text-align: center;\n\n  border-radius: 2px;\n  padding: 16px;\n\n  position: fixed;\n  z-index: 1;\n  left: 50%;\n  bottom: 50px;\n}\n\n#snackbar.error {\n  background-color: #f03e3e;\n}\n\n.show {\n  visibility: visible !important;\n  -webkit-animation: fadeIn 0.5s;\n  animation: fadeIn 0.5s;\n}\n\n@-webkit-keyframes fadeIn {\n  from {\n    bottom: 0;\n    opacity: 0;\n  }\n  to {\n    bottom: 50px;\n    opacity: 1;\n  }\n}\n\n@keyframes fadeIn {\n  from {\n    bottom: 0;\n    opacity: 0;\n  }\n  to {\n    bottom: 50px;\n    opacity: 1;\n  }\n}\n", "",{"version":3,"sources":["webpack://./src/css/snackbar.css"],"names":[],"mappings":"AAAA;EACE,gBAAgB;;EAEhB,kBAAkB;EAClB,mBAAmB;;EAEnB,sBAAsB;;EAEtB,yBAAyB;EACzB,WAAW;EACX,kBAAkB;;EAElB,kBAAkB;EAClB,aAAa;;EAEb,eAAe;EACf,UAAU;EACV,SAAS;EACT,YAAY;AACd;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,8BAA8B;EAC9B,8BAA8B;EAC9B,sBAAsB;AACxB;;AAEA;EACE;IACE,SAAS;IACT,UAAU;EACZ;EACA;IACE,YAAY;IACZ,UAAU;EACZ;AACF;;AAEA;EACE;IACE,SAAS;IACT,UAAU;EACZ;EACA;IACE,YAAY;IACZ,UAAU;EACZ;AACF","sourcesContent":["#snackbar {\n  min-width: 250px;\n\n  visibility: hidden;\n  margin-left: -125px;\n\n  background-color: #333;\n\n  background-color: #37b24d;\n  color: #fff;\n  text-align: center;\n\n  border-radius: 2px;\n  padding: 16px;\n\n  position: fixed;\n  z-index: 1;\n  left: 50%;\n  bottom: 50px;\n}\n\n#snackbar.error {\n  background-color: #f03e3e;\n}\n\n.show {\n  visibility: visible !important;\n  -webkit-animation: fadeIn 0.5s;\n  animation: fadeIn 0.5s;\n}\n\n@-webkit-keyframes fadeIn {\n  from {\n    bottom: 0;\n    opacity: 0;\n  }\n  to {\n    bottom: 50px;\n    opacity: 1;\n  }\n}\n\n@keyframes fadeIn {\n  from {\n    bottom: 0;\n    opacity: 0;\n  }\n  to {\n    bottom: 50px;\n    opacity: 1;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2336,6 +2515,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validator */ "./src/js/domain/validator.ts");
+/* harmony import */ var _view_SnackBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../view/SnackBar */ "./src/js/view/SnackBar.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -2345,6 +2526,8 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+
+
 
 const emailValidator = [
     { testFunc: isEmpty, errorMsg: '이메일을 입력해주세요.' },
@@ -2425,8 +2608,8 @@ const Auth = {
                 localStorage.setItem('userId', id);
                 window.location.href = '#/manage';
             }
-            catch (e) {
-                alert(e);
+            catch (error) {
+                _view_SnackBar__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(error, _constants__WEBPACK_IMPORTED_MODULE_2__.ERROR);
             }
         });
     },
@@ -2446,7 +2629,7 @@ const Auth = {
                 window.location.href = '#/login';
             }
             catch (error) {
-                alert(error);
+                _view_SnackBar__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(error, _constants__WEBPACK_IMPORTED_MODULE_2__.ERROR);
             }
         });
     },
@@ -2466,7 +2649,7 @@ const Auth = {
                 window.location.href = '#/purchase';
             }
             catch (error) {
-                alert(error);
+                _view_SnackBar__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(error, _constants__WEBPACK_IMPORTED_MODULE_2__.ERROR);
             }
         });
     },
