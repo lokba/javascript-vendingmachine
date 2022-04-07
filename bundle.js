@@ -218,8 +218,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Router)
 /* harmony export */ });
-/* harmony import */ var _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../domain/VendingMachine */ "./src/js/domain/VendingMachine.ts");
-/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../domain/Auth */ "./src/js/domain/Auth.ts");
+/* harmony import */ var _domain_vendingMachine_VendingMachine__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../domain/vendingMachine/VendingMachine */ "./src/js/domain/vendingMachine/VendingMachine.ts");
+/* harmony import */ var _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../domain/auth/Auth */ "./src/js/domain/auth/Auth.ts");
 /* harmony import */ var _vendingMachine_PurchaseProductTab__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vendingMachine/PurchaseProductTab */ "./src/js/view/vendingMachine/PurchaseProductTab.js");
 /* harmony import */ var _vendingMachine_AddChangeTab__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vendingMachine/AddChangeTab */ "./src/js/view/vendingMachine/AddChangeTab.js");
 /* harmony import */ var _vendingMachine_ManageProductTab__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./vendingMachine/ManageProductTab */ "./src/js/view/vendingMachine/ManageProductTab.js");
@@ -437,7 +437,7 @@ var Router = /*#__PURE__*/_createClass(function Router() {
   });
 
   //멤버변수 생성
-  _classPrivateFieldSet(this, _vendingMachine, new _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_0__["default"]());
+  _classPrivateFieldSet(this, _vendingMachine, new _domain_vendingMachine_VendingMachine__WEBPACK_IMPORTED_MODULE_0__["default"]());
 
   _classPrivateFieldSet(this, _renderList, {
     '#/manage': new _vendingMachine_ManageProductTab__WEBPACK_IMPORTED_MODULE_4__["default"](_classPrivateFieldGet(this, _vendingMachine)),
@@ -517,7 +517,7 @@ function _handleProfileThumbnail2() {
 
   if (_classPrivateMethodGet(this, _isAdmin, _isAdmin2).call(this)) {
     var id = localStorage.getItem(_constants__WEBPACK_IMPORTED_MODULE_11__.STORAGE_KEY.USER_ID);
-    _domain_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].getUserInfo(id).then(function (_ref) {
+    _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].getUserInfo(id).then(function (_ref) {
       var name = _ref.name;
       _classPrivateFieldGet(_this2, _nickname).textContent = name[0];
     });
@@ -579,7 +579,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LoginView)
 /* harmony export */ });
-/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../domain/Auth */ "./src/js/domain/Auth.ts");
+/* harmony import */ var _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../domain/auth/Auth */ "./src/js/domain/auth/Auth.ts");
 /* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
 /* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
 /* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
@@ -655,7 +655,7 @@ var LoginView = /*#__PURE__*/function () {
 
         var password = _classPrivateFieldGet(_this, _userPassword).value;
 
-        _domain_Auth__WEBPACK_IMPORTED_MODULE_0__["default"].login({
+        _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_0__["default"].login({
           email: email,
           password: password
         });
@@ -701,7 +701,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ModifyMyInfoView)
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
-/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domain/Auth */ "./src/js/domain/Auth.ts");
+/* harmony import */ var _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domain/auth/Auth */ "./src/js/domain/auth/Auth.ts");
 /* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
 /* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
 /* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
@@ -794,7 +794,7 @@ var ModifyMyInfoView = /*#__PURE__*/function () {
       var passwordConfirm = _classPrivateFieldGet(_this, _passwordConfirm).value;
 
       try {
-        _domain_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].modify(id, {
+        _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].modify(id, {
           email: email,
           name: name,
           password: password,
@@ -829,7 +829,7 @@ var ModifyMyInfoView = /*#__PURE__*/function () {
       var _this2 = this;
 
       var id = localStorage.getItem(_constants__WEBPACK_IMPORTED_MODULE_0__.STORAGE_KEY.USER_ID);
-      _domain_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].getUserInfo(id).then(function (_ref) {
+      _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].getUserInfo(id).then(function (_ref) {
         var name = _ref.name,
             email = _ref.email;
         _classPrivateFieldGet(_this2, _email).value = email;
@@ -857,7 +857,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ RegisterView)
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
-/* harmony import */ var _domain_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domain/Auth */ "./src/js/domain/Auth.ts");
+/* harmony import */ var _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domain/auth/Auth */ "./src/js/domain/auth/Auth.ts");
 /* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
 /* harmony import */ var _SnackBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SnackBar */ "./src/js/view/SnackBar.js");
 /* harmony import */ var _template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../template */ "./src/js/view/template.js");
@@ -951,7 +951,7 @@ var RegisterView = /*#__PURE__*/function () {
         var passwordConfirm = _classPrivateFieldGet(_this, _passwordConfirm).value;
 
         try {
-          _domain_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].register({
+          _domain_auth_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].register({
             email: email,
             name: name,
             password: password,
@@ -2504,19 +2504,20 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ "./src/js/domain/Auth.ts":
-/*!*******************************!*\
-  !*** ./src/js/domain/Auth.ts ***!
-  \*******************************/
+/***/ "./src/js/domain/auth/Auth.ts":
+/*!************************************!*\
+  !*** ./src/js/domain/auth/Auth.ts ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validator */ "./src/js/domain/validator.ts");
-/* harmony import */ var _view_SnackBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../view/SnackBar */ "./src/js/view/SnackBar.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _vendingMachine_validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vendingMachine/validator */ "./src/js/domain/vendingMachine/validator.ts");
+/* harmony import */ var _view_SnackBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../view/SnackBar */ "./src/js/view/SnackBar.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./validator */ "./src/js/domain/auth/validator.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -2529,41 +2530,42 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 
 
+
 const emailValidator = [
-    { testFunc: isEmpty, errorMsg: '이메일을 입력해주세요.' },
-    { testFunc: hasBlank, errorMsg: '이메일은 공백을 포함할 수 없습니다.' },
+    { testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.isEmpty, errorMsg: '이메일을 입력해주세요.' },
+    { testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.hasBlank, errorMsg: '이메일은 공백을 포함할 수 없습니다.' },
 ];
 const nameValidator = [
-    { testFunc: isEmpty, errorMsg: '이름을 입력해주세요.' },
-    { testFunc: hasBlank, errorMsg: '이름은 공백을 포함할 수 없습니다.' },
+    { testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.isEmpty, errorMsg: '이름을 입력해주세요.' },
+    { testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.hasBlank, errorMsg: '이름은 공백을 포함할 수 없습니다.' },
     {
-        testFunc: isNameLengthOutOfRange,
+        testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.isNameLengthOutOfRange,
         errorMsg: '이름은 2자 미만이거나 6자를 초과할 수 없습니다.',
     },
 ];
 const passwordValidator = [
-    { testFunc: isEmpty, errorMsg: '비밀번호를 입력해주세요.' },
-    { testFunc: hasBlank, errorMsg: '비밀번호는 공백을 포함할 수 없습니다.' },
+    { testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.isEmpty, errorMsg: '비밀번호를 입력해주세요.' },
+    { testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.hasBlank, errorMsg: '비밀번호는 공백을 포함할 수 없습니다.' },
     {
-        testFunc: isUnderMinLengthPassword,
+        testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.isUnderMinLengthPassword,
         errorMsg: '비밀번호는 10자 미만일 수 없습니다.',
     },
     {
-        testFunc: isInValidPassword,
+        testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.isInValidPassword,
         errorMsg: '비밀번호는 소문자, 대문자, 숫자, 특수문자 중 2가지를 혼합해야 합니다.',
     },
 ];
 const passwordConfirmValidator = [
-    { testFunc: isEmpty, errorMsg: '비밀번호 확인을 입력해주세요.' },
-    { testFunc: hasBlank, errorMsg: '비밀번호 확인은 공백을 포함할 수 없습니다.' },
+    { testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.isEmpty, errorMsg: '비밀번호 확인을 입력해주세요.' },
+    { testFunc: _validator__WEBPACK_IMPORTED_MODULE_3__.hasBlank, errorMsg: '비밀번호 확인은 공백을 포함할 수 없습니다.' },
 ];
 function validateUserInfo(userInfo) {
     const { email, name, password, passwordConfirm } = userInfo;
-    (0,_validator__WEBPACK_IMPORTED_MODULE_0__.validateData)(email, emailValidator);
-    (0,_validator__WEBPACK_IMPORTED_MODULE_0__.validateData)(name, nameValidator);
-    (0,_validator__WEBPACK_IMPORTED_MODULE_0__.validateData)(password, passwordValidator);
-    (0,_validator__WEBPACK_IMPORTED_MODULE_0__.validateData)(passwordConfirm, passwordConfirmValidator);
-    if (isDifferent(password, passwordConfirm)) {
+    (0,_vendingMachine_validator__WEBPACK_IMPORTED_MODULE_0__.validateData)(email, emailValidator);
+    (0,_vendingMachine_validator__WEBPACK_IMPORTED_MODULE_0__.validateData)(name, nameValidator);
+    (0,_vendingMachine_validator__WEBPACK_IMPORTED_MODULE_0__.validateData)(password, passwordValidator);
+    (0,_vendingMachine_validator__WEBPACK_IMPORTED_MODULE_0__.validateData)(passwordConfirm, passwordConfirmValidator);
+    if ((0,_validator__WEBPACK_IMPORTED_MODULE_3__.isDifferent)(password, passwordConfirm)) {
         throw Error('비밀번호와 비밀번호 확인이 일치해야 합니다.');
     }
 }
@@ -2604,8 +2606,8 @@ const Auth = {
                     throw Error(response);
                 }
                 const { accessToken, user: { id }, } = response;
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('userId', id);
+                localStorage.setItem(_constants__WEBPACK_IMPORTED_MODULE_2__.STORAGE_KEY.ACCESS_TOKEN, accessToken);
+                localStorage.setItem(_constants__WEBPACK_IMPORTED_MODULE_2__.STORAGE_KEY.USER_ID, id);
                 window.location.href = '#/manage';
             }
             catch (error) {
@@ -2654,6 +2656,30 @@ const Auth = {
         });
     },
 };
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Auth);
+
+
+/***/ }),
+
+/***/ "./src/js/domain/auth/validator.ts":
+/*!*****************************************!*\
+  !*** ./src/js/domain/auth/validator.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isUnderMinLengthPassword": () => (/* binding */ isUnderMinLengthPassword),
+/* harmony export */   "isNameLengthOutOfRange": () => (/* binding */ isNameLengthOutOfRange),
+/* harmony export */   "isDifferent": () => (/* binding */ isDifferent),
+/* harmony export */   "isEmpty": () => (/* binding */ isEmpty),
+/* harmony export */   "hasBlank": () => (/* binding */ hasBlank),
+/* harmony export */   "isInValidPassword": () => (/* binding */ isInValidPassword),
+/* harmony export */   "isSpecialCase": () => (/* binding */ isSpecialCase),
+/* harmony export */   "isUpperCase": () => (/* binding */ isUpperCase),
+/* harmony export */   "isLowerCase": () => (/* binding */ isLowerCase),
+/* harmony export */   "isNumber": () => (/* binding */ isNumber)
+/* harmony export */ });
 function isUnderMinLengthPassword(password) {
     return password.length < 10;
 }
@@ -2699,24 +2725,23 @@ function isNumber(value) {
     const code = value.charCodeAt(0);
     return code >= 48 && code <= 57;
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Auth);
 
 
 /***/ }),
 
-/***/ "./src/js/domain/MoneyBox.ts":
-/*!***********************************!*\
-  !*** ./src/js/domain/MoneyBox.ts ***!
-  \***********************************/
+/***/ "./src/js/domain/vendingMachine/MoneyBox.ts":
+/*!**************************************************!*\
+  !*** ./src/js/domain/vendingMachine/MoneyBox.ts ***!
+  \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ MoneyBox)
 /* harmony export */ });
-/* harmony import */ var _RandomStrategy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RandomStrategy */ "./src/js/domain/RandomStrategy.ts");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
+/* harmony import */ var _RandomStrategy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RandomStrategy */ "./src/js/domain/vendingMachine/RandomStrategy.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils */ "./src/js/utils/index.js");
 var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
     if (kind === "m") throw new TypeError("Private method is not writable");
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
@@ -2728,12 +2753,13 @@ var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || 
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _MoneyBox_coinStatusList, _MoneyBox_returnCoinStatusList, _MoneyBox_coinDistributeStrategy;
+var _MoneyBox_instances, _MoneyBox_coinStatusList, _MoneyBox_returnCoinStatusList, _MoneyBox_coinDistributeStrategy, _MoneyBox_generateTotalStatus;
 
 
 
 class MoneyBox {
     constructor() {
+        _MoneyBox_instances.add(this);
         _MoneyBox_coinStatusList.set(this, void 0);
         _MoneyBox_returnCoinStatusList.set(this, void 0);
         _MoneyBox_coinDistributeStrategy.set(this, void 0);
@@ -2758,20 +2784,11 @@ class MoneyBox {
         const totalChange = __classPrivateFieldGet(this, _MoneyBox_coinStatusList, "f").reduce((totalAmount, { value, count }) => totalAmount + value * count, 0);
         return totalChange;
     }
-    //추후 리팩토링 필요!
     get coinStatus() {
-        const totalStatus = {};
-        __classPrivateFieldGet(this, _MoneyBox_coinStatusList, "f").forEach(({ name, count }) => {
-            totalStatus[name] = count;
-        });
-        return totalStatus;
+        return __classPrivateFieldGet(this, _MoneyBox_instances, "m", _MoneyBox_generateTotalStatus).call(this, __classPrivateFieldGet(this, _MoneyBox_coinStatusList, "f"));
     }
     get returnCoinStatus() {
-        const totalStatus = {};
-        __classPrivateFieldGet(this, _MoneyBox_returnCoinStatusList, "f").forEach(({ name, count }) => {
-            totalStatus[name] = count;
-        });
-        return totalStatus;
+        return __classPrivateFieldGet(this, _MoneyBox_instances, "m", _MoneyBox_generateTotalStatus).call(this, __classPrivateFieldGet(this, _MoneyBox_returnCoinStatusList, "f"));
     }
     addChange(inputMoney) {
         const distributedCoinStatusList = __classPrivateFieldGet(this, _MoneyBox_coinDistributeStrategy, "f").distribute(inputMoney);
@@ -2781,10 +2798,9 @@ class MoneyBox {
             return cloneCoinObject;
         }), "f");
     }
-    //TODO: 리팩토링 필수
     returnChange(totalInsertMoney) {
-        const returnCoinStatusList = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.deepCopyList)(__classPrivateFieldGet(this, _MoneyBox_returnCoinStatusList, "f"));
         const coinStatusList = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.deepCopyList)(__classPrivateFieldGet(this, _MoneyBox_coinStatusList, "f"));
+        const returnCoinStatusList = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.deepCopyList)(__classPrivateFieldGet(this, _MoneyBox_returnCoinStatusList, "f"));
         let leftMoney = totalInsertMoney;
         coinStatusList.forEach(({ value, count }, index) => {
             const quotient = Math.floor(leftMoney / value);
@@ -2800,23 +2816,29 @@ class MoneyBox {
         return totalInsertMoney - leftMoney;
     }
 }
-_MoneyBox_coinStatusList = new WeakMap(), _MoneyBox_returnCoinStatusList = new WeakMap(), _MoneyBox_coinDistributeStrategy = new WeakMap();
+_MoneyBox_coinStatusList = new WeakMap(), _MoneyBox_returnCoinStatusList = new WeakMap(), _MoneyBox_coinDistributeStrategy = new WeakMap(), _MoneyBox_instances = new WeakSet(), _MoneyBox_generateTotalStatus = function _MoneyBox_generateTotalStatus(statusList) {
+    const totalStatus = {};
+    statusList.forEach(({ name, count }) => {
+        totalStatus[name] = count;
+    });
+    return totalStatus;
+};
 
 
 /***/ }),
 
-/***/ "./src/js/domain/RandomStrategy.ts":
-/*!*****************************************!*\
-  !*** ./src/js/domain/RandomStrategy.ts ***!
-  \*****************************************/
+/***/ "./src/js/domain/vendingMachine/RandomStrategy.ts":
+/*!********************************************************!*\
+  !*** ./src/js/domain/vendingMachine/RandomStrategy.ts ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils */ "./src/js/utils/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
 
 
 function getRandomCoin(moneyLeft, value) {
@@ -2851,21 +2873,21 @@ const RandomStrategy = {
 
 /***/ }),
 
-/***/ "./src/js/domain/VendingMachine.ts":
-/*!*****************************************!*\
-  !*** ./src/js/domain/VendingMachine.ts ***!
-  \*****************************************/
+/***/ "./src/js/domain/vendingMachine/VendingMachine.ts":
+/*!********************************************************!*\
+  !*** ./src/js/domain/vendingMachine/VendingMachine.ts ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ VendingMachine)
 /* harmony export */ });
-/* harmony import */ var _VendingMachineProduct__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VendingMachineProduct */ "./src/js/domain/VendingMachineProduct.ts");
-/* harmony import */ var _MoneyBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MoneyBox */ "./src/js/domain/MoneyBox.ts");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
-/* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./validator */ "./src/js/domain/validator.ts");
+/* harmony import */ var _VendingMachineProduct__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VendingMachineProduct */ "./src/js/domain/vendingMachine/VendingMachineProduct.ts");
+/* harmony import */ var _MoneyBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MoneyBox */ "./src/js/domain/vendingMachine/MoneyBox.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils */ "./src/js/utils/index.js");
+/* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./validator */ "./src/js/domain/vendingMachine/validator.ts");
 var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
     if (kind === "m") throw new TypeError("Private method is not writable");
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
@@ -2985,18 +3007,18 @@ _VendingMachine_productList = new WeakMap(), _VendingMachine_moneyBox = new Weak
 
 /***/ }),
 
-/***/ "./src/js/domain/VendingMachineProduct.ts":
-/*!************************************************!*\
-  !*** ./src/js/domain/VendingMachineProduct.ts ***!
-  \************************************************/
+/***/ "./src/js/domain/vendingMachine/VendingMachineProduct.ts":
+/*!***************************************************************!*\
+  !*** ./src/js/domain/vendingMachine/VendingMachineProduct.ts ***!
+  \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ VendingMachineProduct)
 /* harmony export */ });
-/* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validator */ "./src/js/domain/validator.ts");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validator */ "./src/js/domain/vendingMachine/validator.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
 var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, state, kind, f) {
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
@@ -3062,10 +3084,10 @@ _VendingMachineProduct_name = new WeakMap(), _VendingMachineProduct_price = new 
 
 /***/ }),
 
-/***/ "./src/js/domain/validator.ts":
-/*!************************************!*\
-  !*** ./src/js/domain/validator.ts ***!
-  \************************************/
+/***/ "./src/js/domain/vendingMachine/validator.ts":
+/*!***************************************************!*\
+  !*** ./src/js/domain/vendingMachine/validator.ts ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -3081,7 +3103,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isExceedMaxTotalChange": () => (/* binding */ isExceedMaxTotalChange),
 /* harmony export */   "validateData": () => (/* binding */ validateData)
 /* harmony export */ });
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.js");
 
 // product data validation
 function hasEmptyInput({ name, price, stock }) {
